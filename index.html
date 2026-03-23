@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>القارئ القرآني — Base Chain</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- ethers v6 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+
+  <style>
+    /* ── Reset & Variables ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:   #c9a84c;
+      --gold2:  #e8d08a;
+      --ink:    #0d0c07;
+      --paper:  #f7f0e0;
+      --paper2: #ede4ca;
+      --rust:   #7a3b1e;
+      --teal:   #1a4a4a;
+      --radius: 12px;
+      --shadow: 0 8px 40px rgba(0,0,0,.35);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Amiri', serif;
+      background: var(--ink);
+      color: var(--paper);
+      overflow-x: hidden;
+    }
+
+    /* ── Ornamental Background ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, #2a1a00 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80%  90%, #0a2020 0%, transparent 60%),
+        repeating-linear-gradient(
+          45deg,
+          transparent 0px, transparent 40px,
+          rgba(201,168,76,.03) 40px, rgba(201,168,76,.03) 41px
+        );
+      pointer-events: none;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px 80px;
+      gap: 32px;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────── */
+    header {
+      text-align: center;
+    }
+
+    .bismillah {
+      font-family: 'Amiri Quran', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--gold);
+      letter-spacing: .02em;
+      line-height: 1.4;
+      text-shadow: 0 0 30px rgba(201,168,76,.4);
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(201,168,76,.3); }
+      to   { text-shadow: 0 0 50px rgba(201,168,76,.7), 0 0 80px rgba(201,168,76,.2); }
+    }
+
+    .subtitle {
+      font-size: .85rem;
+      color: rgba(247,240,224,.45);
+      margin-top: 8px;
+      font-family: 'DM Mono', monospace;
+      direction: ltr;
+    }
+
+    /* ── Divider ───────────────────────────────────────────────────── */
+    .ornament {
+      color: var(--gold);
+      opacity: .5;
+      font-size: 1.4rem;
+      letter-spacing: .4em;
+    }
+
+    /* ── Wallet Card ───────────────────────────────────────────────── */
+    .card {
+      background: linear-gradient(145deg, rgba(247,240,224,.06), rgba(247,240,224,.02));
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+      padding: 28px 32px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: var(--shadow);
+    }
+
+    .wallet-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      direction: ltr;
+    }
+
+    .wallet-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #ff5555;
+      flex-shrink: 0;
+      transition: background .4s;
+    }
+    .wallet-dot.connected { background: #50fa7b; box-shadow: 0 0 8px #50fa7b; }
+
+    #walletAddr {
+      font-family: 'DM Mono', monospace;
+      font-size: .8rem;
+      color: var(--gold2);
+      flex: 1;
+      word-break: break-all;
+    }
+
+    /* ── Network Badge ─────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(26,74,74,.6);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 99px;
+      padding: 4px 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      color: var(--gold2);
+      direction: ltr;
+    }
+
+    /* ── Stats Row ─────────────────────────────────────────────────── */
+    .stats {
+      display: flex;
+      gap: 24px;
+      direction: ltr;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      color: rgba(247,240,224,.4);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .stat-value {
+      font-family: 'DM Mono', monospace;
+      font-size: .95rem;
+      color: var(--gold);
+    }
+
+    /* ── Big Button ────────────────────────────────────────────────── */
+    .btn-connect, .btn-read {
+      width: 100%;
+      max-width: 560px;
+      padding: 18px;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-connect {
+      background: linear-gradient(135deg, var(--gold) 0%, #a07828 100%);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .btn-connect:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201,168,76,.35); }
+
+    .btn-read {
+      background: linear-gradient(135deg, var(--teal) 0%, #0d2e2e 100%);
+      color: var(--gold2);
+      border: 1px solid rgba(201,168,76,.35);
+      font-size: 1.3rem;
+      letter-spacing: .04em;
+    }
+    .btn-read:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(26,74,74,.6); border-color: var(--gold); }
+    .btn-read:disabled { opacity: .5; cursor: not-allowed; }
+
+    .btn-read::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,.1), transparent);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .btn-read:hover:not(:disabled)::after { opacity: 1; }
+
+    /* ── Verse Display ─────────────────────────────────────────────── */
+    .verse-frame {
+      width: 100%;
+      max-width: 700px;
+      background: linear-gradient(160deg, rgba(247,240,224,.07), rgba(247,240,224,.02));
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      text-align: center;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(201,168,76,.1);
+      display: none;
+      animation: fadeUp .6s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .verse-arabic {
+      font-family: 'Amiri Quran', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      line-height: 2.2;
+      color: var(--paper);
+      text-shadow: 0 2px 12px rgba(0,0,0,.4);
+      margin-bottom: 24px;
+    }
+
+    .verse-ref {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: var(--gold);
+      opacity: .8;
+      direction: ltr;
+      letter-spacing: .1em;
+    }
+
+    /* ── Tx Info ───────────────────────────────────────────────────── */
+    .tx-info {
+      direction: ltr;
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      color: rgba(247,240,224,.35);
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .tx-info a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .tx-info a:hover { text-decoration: underline; }
+
+    /* ── Loader ────────────────────────────────────────────────────── */
+    .loader {
+      display: none;
+      width: 36px; height: 36px;
+      border: 3px solid rgba(201,168,76,.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Status msg ────────────────────────────────────────────────── */
+    #statusMsg {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: rgba(247,240,224,.5);
+      text-align: center;
+      direction: ltr;
+      min-height: 20px;
+    }
+    #statusMsg.error { color: #ff6b6b; }
+    #statusMsg.success { color: #50fa7b; }
+
+    /* ── Footer ────────────────────────────────────────────────────── */
+    footer {
+      direction: ltr;
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      color: rgba(247,240,224,.2);
+      text-align: center;
+    }
+
+    footer a { color: rgba(201,168,76,.5); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="subtitle">Quran Reader · Base Blockchain · On-Chain Every Verse</div>
+  </header>
+
+  <div class="ornament">❖ ✦ ❖</div>
+
+  <!-- Wallet Card -->
+  <div class="card">
+    <div class="wallet-row">
+      <div class="wallet-dot" id="walletDot"></div>
+      <span id="walletAddr">غير متصل — Not Connected</span>
+      <div class="badge" id="networkBadge" style="display:none">
+        <span>⬡</span><span id="networkName">Base</span>
+      </div>
+    </div>
+    <div class="stats" id="statsRow" style="display:none">
+      <div class="stat">
+        <span class="stat-label">Your Reads</span>
+        <span class="stat-value" id="myReads">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Global Reads</span>
+        <span class="stat-value" id="globalReads">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Fee</span>
+        <span class="stat-value" id="readFee">0 ETH</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connect / Read Buttons -->
+  <button class="btn-connect" id="btnConnect" onclick="connectWallet()">
+    🔗 &nbsp; Connect Wallet
+  </button>
+
+  <button class="btn-read" id="btnRead" onclick="requestVerse()" disabled>
+    اقرأ آية &nbsp;—&nbsp; Read a Verse
+  </button>
+
+  <!-- Loader -->
+  <div class="loader" id="loader"></div>
+
+  <!-- Status -->
+  <div id="statusMsg"></div>
+
+  <!-- Verse Display -->
+  <div class="verse-frame" id="verseFrame">
+    <div class="verse-arabic" id="verseArabic"></div>
+    <div class="verse-ref" id="verseRef"></div>
+  </div>
+
+  <div class="tx-info" id="txInfo">
+    tx: <a id="txLink" href="#" target="_blank"></a>
+  </div>
+
+  <div class="ornament" style="opacity:.25">❖ ✦ ❖</div>
+
+  <!-- Footer -->
+  <footer>
+    Contract owner: 0x9BbE3f747011fEe98DD86DF9eea9DD92FFA89Bac &nbsp;|&nbsp;
+    <a href="https://basescan.org" target="_blank">BaseScan ↗</a>
+  </footer>
+
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<script>
+// ── Contract Config ──────────────────────────────────────────────────────
+// IMPORTANT: Replace CONTRACT_ADDRESS after you deploy on Remix
+const CONTRACT_ADDRESS = "0x7676442bc0DB42618812F28d31194Fd88bAdc70A";
+
+const ABI = [
+  "function requestVerse() external payable returns (uint256 verseIndex)",
+  "function getStats(address wallet) external view returns (uint256, uint256, uint256)",
+  "function readFee() external view returns (uint256)",
+  "event VerseRequested(address indexed reader, uint256 verseIndex, uint256 globalCount, uint256 timestamp)"
+];
+
+// Base Mainnet = 8453 | Base Sepolia (testnet) = 84532
+const BASE_CHAIN_ID = 8453;
+const BASE_CHAIN_HEX = "0x2105";
+const BASESCAN_URL  = "https://basescan.org/tx/";
+
+// ── 30 Quran Verses (Arabic) ─────────────────────────────────────────────
+const VERSES = [
+  { arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", ref: "Al-Fatiha 1:2" },
+  { arabic: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", ref: "Al-Fatiha 1:5" },
+  { arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ", ref: "Al-Fatiha 1:6" },
+  { arabic: "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ هُدًى لِلْمُتَّقِينَ", ref: "Al-Baqarah 2:2" },
+  { arabic: "وَبَشِّرِ الصَّابِرِينَ", ref: "Al-Baqarah 2:155" },
+  { arabic: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", ref: "Al-Baqarah 2:153" },
+  { arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ", ref: "Al-Baqarah 2:255 — Ayat al-Kursi" },
+  { arabic: "لَا إِكْرَاهَ فِي الدِّينِ", ref: "Al-Baqarah 2:256" },
+  { arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً", ref: "Al-Baqarah 2:201" },
+  { arabic: "إِنَّمَا الْمُؤْمِنُونَ إِخْوَةٌ", ref: "Al-Hujurat 49:10" },
+  { arabic: "وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ", ref: "Hud 11:88" },
+  { arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", ref: "Al-Inshirah 94:6" },
+  { arabic: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا", ref: "Al-Inshirah 94:5" },
+  { arabic: "وَنَفْسٍ وَمَا سَوَّاهَا", ref: "Al-Shams 91:7" },
+  { arabic: "وَاللَّهُ يُحِبُّ الْمُطَّهِّرِينَ", ref: "Al-Tawbah 9:108" },
+  { arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ", ref: "Al-Ikhlas 112:1" },
+  { arabic: "اللَّهُ الصَّمَدُ", ref: "Al-Ikhlas 112:2" },
+  { arabic: "لَمْ يَلِدْ وَلَمْ يُولَدْ", ref: "Al-Ikhlas 112:3" },
+  { arabic: "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", ref: "Al-Ikhlas 112:4" },
+  { arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", ref: "Al-Falaq 113:1" },
+  { arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", ref: "Al-Nas 114:1" },
+  { arabic: "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ", ref: "Al-Kawthar 108:1" },
+  { arabic: "وَخَلَقْنَاكُم مِّن مَّاءٍ فَجَعَلْنَاكُمْ شَعُوبًا وَقَبَائِلَ لِتَعَارَفُوا", ref: "Al-Hujurat 49:13" },
+  { arabic: "يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ", ref: "Ali Imran 3:102" },
+  { arabic: "وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ", ref: "Al-Ma'idah 5:2" },
+  { arabic: "إِنَّ اللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّىٰ يُغَيِّرُوا مَا بِأَنفُسِهِمْ", ref: "Ar-Ra'd 13:11" },
+  { arabic: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ", ref: "Al-Hadid 57:4" },
+  { arabic: "سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ", ref: "Al-Hadid 57:1" },
+  { arabic: "نُورٌ عَلَىٰ نُورٍ", ref: "An-Nur 24:35" },
+  { arabic: "وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ", ref: "Al-Baqarah 2:216" }
+];
+
+// ── App State ─────────────────────────────────────────────────────────────
+let provider, signer, contract, userAddress;
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+const $  = id => document.getElementById(id);
+const setStatus = (msg, cls = '') => {
+  $('statusMsg').textContent = msg;
+  $('statusMsg').className = cls;
+};
+
+function shortAddr(addr) {
+  return addr.slice(0,6) + '…' + addr.slice(-4);
+}
+
+async function refreshStats() {
+  try {
+    const [total, mine, fee] = await contract.getStats(userAddress);
+    $('globalReads').textContent = total.toString();
+    $('myReads').textContent = mine.toString();
+    const feeEth = ethers.formatEther(fee);
+    $('readFee').textContent = feeEth === '0.0' ? 'Free' : feeEth + ' ETH';
+    $('statsRow').style.display = 'flex';
+  } catch(_) {}
+}
+
+// ── Connect Wallet ────────────────────────────────────────────────────────
+async function connectWallet() {
+  if (!window.ethereum) {
+    setStatus('No wallet detected. Install MetaMask or Coinbase Wallet.', 'error');
+    return;
+  }
+
+  try {
+    setStatus('Connecting…');
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+
+    // Switch to Base if needed
+    const network = await provider.getNetwork();
+    if (Number(network.chainId) !== BASE_CHAIN_ID) {
+      setStatus('Switching to Base network…');
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: BASE_CHAIN_HEX }]
+        });
+      } catch (switchErr) {
+        if (switchErr.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: BASE_CHAIN_HEX,
+              chainName: 'Base',
+              nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+              rpcUrls: ['https://mainnet.base.org'],
+              blockExplorerUrls: ['https://basescan.org']
+            }]
+          });
+        } else throw switchErr;
+      }
+      provider = new ethers.BrowserProvider(window.ethereum);
+    }
+
+    signer = await provider.getSigner();
+    userAddress = await signer.getAddress();
+
+    // UI updates
+    $('walletDot').classList.add('connected');
+    $('walletAddr').textContent = shortAddr(userAddress);
+    $('networkBadge').style.display = 'inline-flex';
+    $('networkName').textContent = 'Base';
+    $('btnConnect').style.display = 'none';
+    $('btnRead').disabled = false;
+
+    // Init contract
+    if (CONTRACT_ADDRESS !== "PASTE_YOUR_DEPLOYED_CONTRACT_ADDRESS_HERE") {
+      contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      await refreshStats();
+    } else {
+      setStatus('⚠️  Deploy the contract on Remix, then paste the address in index.html', 'error');
+    }
+
+    setStatus('Wallet connected ✓', 'success');
+  } catch (err) {
+    setStatus(err.message || 'Connection failed', 'error');
+  }
+}
+
+// ── Request Verse ─────────────────────────────────────────────────────────
+async function requestVerse() {
+  if (!contract) {
+    setStatus('Please deploy the contract and update CONTRACT_ADDRESS first.', 'error');
+    return;
+  }
+
+  $('btnRead').disabled = true;
+  $('loader').style.display = 'block';
+  $('verseFrame').style.display = 'none';
+  $('txInfo').style.display = 'none';
+  setStatus('Sending transaction to Base…');
+
+  try {
+    const fee = await contract.readFee();
+    const tx  = await contract.requestVerse({ value: fee });
+    setStatus('Transaction sent. Waiting for confirmation…');
+
+    const receipt = await tx.wait();
+
+    // Parse VerseRequested event
+    let verseIndex = 0;
+    for (const log of receipt.logs) {
+      try {
+        const parsed = contract.interface.parseLog(log);
+        if (parsed && parsed.name === 'VerseRequested') {
+          verseIndex = Number(parsed.args.verseIndex);
+          break;
+        }
+      } catch(_) {}
+    }
+
+    const verse = VERSES[verseIndex % VERSES.length];
+
+    // Show verse
+    $('verseArabic').textContent = verse.arabic;
+    $('verseRef').textContent    = verse.ref;
+    $('verseFrame').style.display = 'block';
+
+    // Show tx link
+    const txHash = receipt.hash;
+    $('txLink').href        = BASESCAN_URL + txHash;
+    $('txLink').textContent = txHash.slice(0,18) + '…';
+    $('txInfo').style.display = 'block';
+
+    setStatus('آية مباركة — Blessed verse received ✓', 'success');
+    await refreshStats();
+
+  } catch (err) {
+    if (err.code === 4001 || (err.info && err.info.error && err.info.error.code === 4001)) {
+      setStatus('Transaction cancelled by user.', 'error');
+    } else {
+      setStatus(err.reason || err.message || 'Transaction failed', 'error');
+    }
+  } finally {
+    $('loader').style.display = 'none';
+    $('btnRead').disabled = false;
+  }
+}
+</script>
+</body>
+</html>
