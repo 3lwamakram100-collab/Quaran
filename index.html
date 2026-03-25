@@ -302,165 +302,187 @@ const BASE_CHAIN_ID  = 8453;
 const BASE_CHAIN_HEX = "0x2105";
 const BASESCAN_URL   = "https://basescan.org/tx/";
 
-// ── 10 sets of 3 consecutive verses ──────────────────────────────────────
-// 50 sets of 3 complete consecutive verses — Juz 1–29 — with English & audio
-// Audio: each verse has a verseKey like "2:255" used to fetch mp3 from everyayah.com
 const VERSE_SETS = [
-  [
-    { arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", english: "All praise is for Allah, Lord of all worlds.", ref: "Al-Fatiha 1:2", key: "1:2" },
-    { arabic: "الرَّحْمَٰنِ الرَّحِيمِ", english: "The Most Gracious, Most Merciful.", ref: "Al-Fatiha 1:3", key: "1:3" },
-    { arabic: "مَالِكِ يَوْمِ الدِّينِ", english: "Master of the Day of Judgment.", ref: "Al-Fatiha 1:4", key: "1:4" }
-  ],
-  [
-    { arabic: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", english: "You alone we worship, and You alone we ask for help.", ref: "Al-Fatiha 1:5", key: "1:5" },
-    { arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ", english: "Guide us along the straight path.", ref: "Al-Fatiha 1:6", key: "1:6" },
-    { arabic: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ", english: "The path of those You have blessed, not those You are angry with or who are astray.", ref: "Al-Fatiha 1:7", key: "1:7" }
-  ],
-  [
-    { arabic: "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ هُدًى لِّلْمُتَّقِينَ", english: "This is the Book about which there is no doubt, a guidance for those conscious of Allah.", ref: "Al-Baqarah 2:2", key: "2:2" },
-    { arabic: "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ", english: "Who believe in the unseen, establish prayer, and donate from what We have provided for them.", ref: "Al-Baqarah 2:3", key: "2:3" },
-    { arabic: "وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ", english: "And who believe in what has been revealed to you and what was revealed before you, and firmly believe in the Hereafter.", ref: "Al-Baqarah 2:4", key: "2:4" }
-  ],
-  [
-    { arabic: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", english: "O believers! Seek help through patience and prayer. Surely Allah is with those who are patient.", ref: "Al-Baqarah 2:153", key: "2:153" },
-    { arabic: "وَلَا تَقُولُوا لِمَن يُقْتَلُ فِي سَبِيلِ اللَّهِ أَمْوَاتٌ ۚ بَلْ أَحْيَاءٌ وَلَٰكِن لَّا تَشْعُرُونَ", english: "Do not say those killed in Allah's cause are dead — they are alive, but you do not perceive it.", ref: "Al-Baqarah 2:154", key: "2:154" },
-    { arabic: "وَلَنَبْلُوَنَّكُم بِشَيْءٍ مِّنَ الْخَوْفِ وَالْجُوعِ وَنَقْصٍ مِّنَ الْأَمْوَالِ وَالْأَنفُسِ وَالثَّمَرَاتِ ۗ وَبَشِّرِ الصَّابِرِينَ", english: "We will test you with fear, hunger, and loss of wealth, lives, and crops. Give good news to the patient.", ref: "Al-Baqarah 2:155", key: "2:155" }
-  ],
-  [
-    { arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ", english: "Allah — there is no god except Him, the Ever-Living, the Sustainer. Neither drowsiness nor sleep overtakes Him.", ref: "Al-Baqarah 2:255", key: "2:255" },
-    { arabic: "لَا إِكْرَاهَ فِي الدِّينِ ۖ قَد تَّبَيَّنَ الرُّشْدُ مِنَ الْغَيِّ", english: "There is no compulsion in religion. The right way has become distinct from the wrong.", ref: "Al-Baqarah 2:256", key: "2:256" },
-    { arabic: "اللَّهُ وَلِيُّ الَّذِينَ آمَنُوا يُخْرِجُهُم مِّنَ الظُّلُمَاتِ إِلَى النُّورِ", english: "Allah is the Guardian of the believers — He brings them out of darkness into light.", ref: "Al-Baqarah 2:257", key: "2:257" }
-  ],
-  [
-    { arabic: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا", english: "Allah does not burden any soul beyond what it can bear.", ref: "Al-Baqarah 2:286", key: "2:286" },
-    { arabic: "رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا", english: "Our Lord! Do not punish us if we forget or make a mistake.", ref: "Al-Baqarah 2:286", key: "2:286" },
-    { arabic: "رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا", english: "Our Lord! Do not burden us with what we cannot bear. Pardon us, forgive us, and have mercy on us. You are our Guardian.", ref: "Al-Baqarah 2:286", key: "2:286" }
-  ],
-  [
-    { arabic: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً", english: "Our Lord! Do not let our hearts deviate after You have guided us. Grant us Your mercy.", ref: "Ali Imran 3:8", key: "3:8" },
-    { arabic: "رَبَّنَا إِنَّكَ جَامِعُ النَّاسِ لِيَوْمٍ لَّا رَيْبَ فِيهِ ۚ إِنَّ اللَّهَ لَا يُخْلِفُ الْمِيعَادَ", english: "Our Lord! You will gather all people on the Day about which there is no doubt. Surely Allah never breaks His promise.", ref: "Ali Imran 3:9", key: "3:9" },
-    { arabic: "كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ۗ وَإِنَّمَا تُوَفَّوْنَ أُجُورَكُمْ يَوْمَ الْقِيَامَةِ", english: "Every soul will taste death, and you will receive your full reward on the Day of Judgment.", ref: "Ali Imran 3:185", key: "3:185" }
-  ],
-  [
-    { arabic: "وَاعْبُدُوا اللَّهَ وَلَا تُشْرِكُوا بِهِ شَيْئًا ۖ وَبِالْوَالِدَيْنِ إِحْسَانًا", english: "Worship Allah and associate nothing with Him, and be good to parents.", ref: "An-Nisa 4:36", key: "4:36" },
-    { arabic: "إِنَّ اللَّهَ لَا يَظْلِمُ مِثْقَالَ ذَرَّةٍ ۖ وَإِن تَكُ حَسَنَةً يُضَاعِفْهَا", english: "Indeed Allah does not wrong anyone even by an atom's weight. If there is a good deed He multiplies it.", ref: "An-Nisa 4:40", key: "4:40" },
-    { arabic: "يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ", english: "O believers! Fulfil your obligations.", ref: "Al-Ma'idah 5:1", key: "5:1" }
-  ],
-  [
-    { arabic: "وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ ۖ وَلَا تَعَاوَنُوا عَلَى الْإِثْمِ وَالْعُدْوَانِ", english: "Cooperate in goodness and righteousness, and do not cooperate in sin and transgression.", ref: "Al-Ma'idah 5:2", key: "5:2" },
-    { arabic: "الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِي وَرَضِيتُ لَكُمُ الْإِسْلَامَ دِينًا", english: "Today I have perfected your faith, completed My favour upon you, and chosen Islam as your way.", ref: "Al-Ma'idah 5:3", key: "5:3" },
-    { arabic: "وَهُوَ اللَّهُ فِي السَّمَاوَاتِ وَفِي الْأَرْضِ ۖ يَعْلَمُ سِرَّكُمْ وَجَهْرَكُمْ", english: "He is Allah in the heavens and earth. He knows your secrets and what you reveal.", ref: "Al-An'am 6:3", key: "6:3" }
-  ],
-  [
-    { arabic: "ادْعُوا رَبَّكُمْ تَضَرُّعًا وَخُفْيَةً ۚ إِنَّهُ لَا يُحِبُّ الْمُعْتَدِينَ", english: "Call upon your Lord humbly and privately. He does not like transgressors.", ref: "Al-A'raf 7:55", key: "7:55" },
-    { arabic: "وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا وَادْعُوهُ خَوْفًا وَطَمَعًا", english: "Do not spread corruption after it has been set in order. Call upon Him with hope and fear.", ref: "Al-A'raf 7:56", key: "7:56" },
-    { arabic: "إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِّنَ الْمُحْسِنِينَ", english: "Indeed Allah's mercy is near to the good-doers.", ref: "Al-A'raf 7:56", key: "7:56" }
-  ],
-  [
-    { arabic: "إِنَّمَا الْمُؤْمِنُونَ الَّذِينَ إِذَا ذُكِرَ اللَّهُ وَجِلَتْ قُلُوبُهُمْ", english: "The believers are only those whose hearts tremble when Allah is mentioned.", ref: "Al-Anfal 8:2", key: "8:2" },
-    { arabic: "وَإِذَا تُلِيَتْ عَلَيْهِمْ آيَاتُهُ زَادَتْهُمْ إِيمَانًا وَعَلَىٰ رَبِّهِمْ يَتَوَكَّلُونَ", english: "And whose faith increases when His verses are recited, and who put their trust in their Lord.", ref: "Al-Anfal 8:2", key: "8:2" },
-    { arabic: "أُولَٰئِكَ هُمُ الْمُؤْمِنُونَ حَقًّا ۚ لَّهُمْ دَرَجَاتٌ عِندَ رَبِّهِمْ وَمَغْفِرَةٌ وَرِزْقٌ كَرِيمٌ", english: "It is they who are truly believers. They will have elevated ranks, forgiveness, and an honourable provision.", ref: "Al-Anfal 8:4", key: "8:4" }
-  ],
-  [
-    { arabic: "قُل لَّن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا ۚ وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ", english: "Say: Nothing will ever befall us except what Allah has destined. He is our Guardian — in Allah let the believers put their trust.", ref: "At-Tawbah 9:51", key: "9:51" },
-    { arabic: "وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ۚ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ", english: "My success comes only through Allah. In Him I trust and to Him I turn.", ref: "Hud 11:88", key: "11:88" },
-    { arabic: "وَاسْتَغْفِرُوا رَبَّكُمْ ثُمَّ تُوبُوا إِلَيْهِ ۚ إِنَّ رَبِّي رَحِيمٌ وَدُودٌ", english: "Seek your Lord's forgiveness and turn to Him. Surely my Lord is Most Merciful, Most Loving.", ref: "Hud 11:90", key: "11:90" }
-  ],
-  [
-    { arabic: "فَاللَّهُ خَيْرٌ حَافِظًا ۖ وَهُوَ أَرْحَمُ الرَّاحِمِينَ", english: "Allah is the best guardian, and He is the Most Merciful of the merciful.", ref: "Yusuf 12:64", key: "12:64" },
-    { arabic: "إِنَّمَا أَشْكُو بَثِّي وَحُزْنِي إِلَى اللَّهِ وَأَعْلَمُ مِنَ اللَّهِ مَا لَا تَعْلَمُونَ", english: "I only complain of my anguish and grief to Allah, and I know from Allah what you do not know.", ref: "Yusuf 12:86", key: "12:86" },
-    { arabic: "يَا بَنِيَّ اذْهَبُوا فَتَحَسَّسُوا مِن يُوسُفَ وَأَخِيهِ وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ ۖ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ", english: "O my sons! Go search for Yusuf and his brother, and do not despair of Allah's mercy. No one despairs of Allah's mercy except the disbelieving people.", ref: "Yusuf 12:87", key: "12:87" }
-  ],
-  [
-    { arabic: "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ", english: "Your Lord declared: If you are grateful, I will increase you. But if you are ungrateful, My punishment is severe.", ref: "Ibrahim 14:7", key: "14:7" },
-    { arabic: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ", english: "It is certainly We Who have revealed the Reminder, and We will certainly preserve it.", ref: "Al-Hijr 15:9", key: "15:9" },
-    { arabic: "إِنَّ اللَّهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَىٰ وَيَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ وَالْبَغْيِ", english: "Indeed Allah commands justice, grace, and courtesy to close relatives. He forbids indecency, wickedness, and transgression.", ref: "An-Nahl 16:90", key: "16:90" }
-  ],
-  [
-    { arabic: "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا", english: "Your Lord has decreed that you worship none but Him, and honour your parents.", ref: "Al-Isra 17:23", key: "17:23" },
-    { arabic: "وَاخْفِضْ لَهُمَا جَنَاحَ الذُّلِّ مِنَ الرَّحْمَةِ وَقُل رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا", english: "Be humble with them out of mercy and say: My Lord! Be merciful to them as they raised me when I was young.", ref: "Al-Isra 17:24", key: "17:24" },
-    { arabic: "رَّبُّكُمْ أَعْلَمُ بِمَا فِي نُفُوسِكُمْ ۚ إِن تَكُونُوا صَالِحِينَ فَإِنَّهُ كَانَ لِلْأَوَّابِينَ غَفُورًا", english: "Your Lord knows best what is in your hearts. If you are righteous, He is truly All-Forgiving to those who turn to Him.", ref: "Al-Isra 17:25", key: "17:25" }
-  ],
-  [
-    { arabic: "وَاصْبِرْ نَفْسَكَ مَعَ الَّذِينَ يَدْعُونَ رَبَّهُم بِالْغَدَاةِ وَالْعَشِيِّ يُرِيدُونَ وَجْهَهُ", english: "Keep yourself content with those who call upon their Lord morning and evening seeking His pleasure.", ref: "Al-Kahf 18:28", key: "18:28" },
-    { arabic: "إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ إِنَّا لَا نُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا", english: "As for those who believe and do good — We never deny the reward of those best in deeds.", ref: "Al-Kahf 18:30", key: "18:30" },
-    { arabic: "قُل لَّوْ كَانَ الْبَحْرُ مِدَادًا لِّكَلِمَاتِ رَبِّي لَنَفِدَ الْبَحْرُ قَبْلَ أَن تَنفَدَ كَلِمَاتُ رَبِّي", english: "Say: If the ocean were ink for the words of my Lord, it would run dry before His words are exhausted.", ref: "Al-Kahf 18:109", key: "18:109" }
-  ],
-  [
-    { arabic: "رَبِّ اشْرَحْ لِي صَدْرِي ۝ وَيَسِّرْ لِي أَمْرِي ۝ وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي ۝ يَفْقَهُوا قَوْلِي", english: "My Lord! Uplift my heart, ease my task, and remove the impediment from my tongue so people may understand my speech.", ref: "Ta-Ha 20:25-28", key: "20:25" },
-    { arabic: "إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ سَيَجْعَلُ لَهُمُ الرَّحْمَٰنُ وُدًّا", english: "Surely those who believe and do good — the Most Merciful will give them love.", ref: "Maryam 19:96", key: "19:96" },
-    { arabic: "وَذَا النُّونِ إِذ ذَّهَبَ مُغَاضِبًا فَنَادَىٰ فِي الظُّلُمَاتِ أَن لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ", english: "And the man of the whale cried out in the darkness: There is no god except You — glory be to You — I have truly been one of the wrongdoers.", ref: "Al-Anbiya 21:87", key: "21:87" }
-  ],
-  [
-    { arabic: "فَاسْتَجَبْنَا لَهُ وَنَجَّيْنَاهُ مِنَ الْغَمِّ ۚ وَكَذَٰلِكَ نُنجِي الْمُؤْمِنِينَ", english: "So We responded to him and rescued him from anguish. And thus do We save the believers.", ref: "Al-Anbiya 21:88", key: "21:88" },
-    { arabic: "قَدْ أَفْلَحَ الْمُؤْمِنُونَ ۝ الَّذِينَ هُمْ فِي صَلَاتِهِمْ خَاشِعُونَ", english: "Certainly the believers have succeeded — those who are humble in their prayers.", ref: "Al-Mu'minun 23:1-2", key: "23:1" },
-    { arabic: "وَالَّذِينَ هُمْ عَنِ اللَّغْوِ مُعْرِضُونَ", english: "And those who turn away from idle talk.", ref: "Al-Mu'minun 23:3", key: "23:3" }
-  ],
-  [
-    { arabic: "اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ ۚ مَثَلُ نُورِهِ كَمِشْكَاةٍ فِيهَا مِصْبَاحٌ", english: "Allah is the Light of the heavens and earth. His light is like a niche in which there is a lamp.", ref: "An-Nur 24:35", key: "24:35" },
-    { arabic: "نُورٌ عَلَىٰ نُورٍ ۗ يَهْدِي اللَّهُ لِنُورِهِ مَن يَشَاءُ", english: "Light upon light. Allah guides to His light whoever He wills.", ref: "An-Nur 24:35", key: "24:35" },
-    { arabic: "وَعِبَادُ الرَّحْمَٰنِ الَّذِينَ يَمْشُونَ عَلَى الْأَرْضِ هَوْنًا وَإِذَا خَاطَبَهُمُ الْجَاهِلُونَ قَالُوا سَلَامًا", english: "The servants of the Most Merciful walk the earth humbly, and when the ignorant address them, they say: Peace.", ref: "Al-Furqan 25:63", key: "25:63" }
-  ],
-  [
-    { arabic: "يَوْمَ لَا يَنفَعُ مَالٌ وَلَا بَنُونَ ۝ إِلَّا مَنْ أَتَى اللَّهَ بِقَلْبٍ سَلِيمٍ", english: "The Day when neither wealth nor children will benefit — only those who come to Allah with a pure heart.", ref: "Ash-Shu'ara 26:88-89", key: "26:88" },
-    { arabic: "أَمَّن يُجِيبُ الْمُضْطَرَّ إِذَا دَعَاهُ وَيَكْشِفُ السُّوءَ", english: "Who responds to the distressed when they call upon Him and removes their affliction?", ref: "An-Naml 27:62", key: "27:62" },
-    { arabic: "إِنَّكَ لَا تَهْدِي مَنْ أَحْبَبْتَ وَلَٰكِنَّ اللَّهَ يَهْدِي مَن يَشَاءُ", english: "You cannot guide whoever you love — rather Allah guides whoever He wills.", ref: "Al-Qasas 28:56", key: "28:56" }
-  ],
-  [
-    { arabic: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً", english: "Among His signs is that He created spouses for you so you may find comfort in them, and He placed love and mercy between you.", ref: "Ar-Rum 30:21", key: "30:21" },
-    { arabic: "وَمِنْ آيَاتِهِ خَلْقُ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافُ أَلْسِنَتِكُمْ وَأَلْوَانِكُمْ ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّلْعَالِمِينَ", english: "Among His signs is the creation of the heavens and earth and the diversity of your languages and colours. In this are signs for those of knowledge.", ref: "Ar-Rum 30:22", key: "30:22" },
-    { arabic: "وَلَقَدْ آتَيْنَا لُقْمَانَ الْحِكْمَةَ أَنِ اشْكُرْ لِلَّهِ ۚ وَمَن يَشْكُرْ فَإِنَّمَا يَشْكُرُ لِنَفْسِهِ", english: "We blessed Luqman with wisdom: Be grateful to Allah — whoever is grateful, it is only for their own good.", ref: "Luqman 31:12", key: "31:12" }
-  ],
-  [
-    { arabic: "يَا بُنَيَّ لَا تُشْرِكْ بِاللَّهِ ۖ إِنَّ الشِّرْكَ لَظُلْمٌ عَظِيمٌ", english: "O my dear son! Never associate anything with Allah — associating others with Him is a tremendous wrong.", ref: "Luqman 31:13", key: "31:13" },
-    { arabic: "وَوَصَّيْنَا الْإِنسَانَ بِوَالِدَيْهِ حَمَلَتْهُ أُمُّهُ وَهْنًا عَلَىٰ وَهْنٍ وَفِصَالُهُ فِي عَامَيْنِ أَنِ اشْكُرْ لِي وَلِوَالِدَيْكَ", english: "We commanded people to honour their parents. Their mother carried them through hardship upon hardship. So be grateful to Me and your parents.", ref: "Luqman 31:14", key: "31:14" },
-    { arabic: "تَتَجَافَىٰ جُنُوبُهُمْ عَنِ الْمَضَاجِعِ يَدْعُونَ رَبَّهُمْ خَوْفًا وَطَمَعًا ۖ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ", english: "They abandon their beds, calling upon their Lord with hope and fear, and donate from what We have provided them.", ref: "As-Sajdah 32:16", key: "32:16" }
-  ],
-  [
-    { arabic: "يس ۝ وَالْقُرْآنِ الْحَكِيمِ ۝ إِنَّكَ لَمِنَ الْمُرْسَلِينَ", english: "Ya-Sin. By the wise Quran! You are truly one of the messengers.", ref: "Ya-Sin 36:1-3", key: "36:1" },
-    { arabic: "إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَن يَقُولَ لَهُ كُن فَيَكُونُ", english: "His command when He intends a thing is only to say: Be! — and it is.", ref: "Ya-Sin 36:82", key: "36:82" },
-    { arabic: "فَسُبْحَانَ الَّذِي بِيَدِهِ مَلَكُوتُ كُلِّ شَيْءٍ وَإِلَيْهِ تُرْجَعُونَ", english: "Glory be to Him in Whose hands is the dominion of all things, and to Him you will all be returned.", ref: "Ya-Sin 36:83", key: "36:83" }
-  ],
-  [
-    { arabic: "قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا", english: "Say: O My servants who have wronged themselves — never despair of Allah's mercy. Indeed Allah forgives all sins.", ref: "Az-Zumar 39:53", key: "39:53" },
-    { arabic: "وَأَنِيبُوا إِلَىٰ رَبِّكُمْ وَأَسْلِمُوا لَهُ مِن قَبْلِ أَن يَأْتِيَكُمُ الْعَذَابُ", english: "Turn to your Lord and submit to Him before the punishment comes upon you.", ref: "Az-Zumar 39:54", key: "39:54" },
-    { arabic: "الَّذِينَ يَحْمِلُونَ الْعَرْشَ وَمَنْ حَوْلَهُ يُسَبِّحُونَ بِحَمْدِ رَبِّهِمْ وَيَسْتَغْفِرُونَ لِلَّذِينَ آمَنُوا", english: "Those who carry the Throne and those around it glorify their Lord with praise and seek forgiveness for the believers.", ref: "Ghafir 40:7", key: "40:7" }
-  ],
-  [
-    { arabic: "إِنَّ الَّذِينَ قَالُوا رَبُّنَا اللَّهُ ثُمَّ اسْتَقَامُوا تَتَنَزَّلُ عَلَيْهِمُ الْمَلَائِكَةُ أَلَّا تَخَافُوا وَلَا تَحْزَنُوا وَأَبْشِرُوا بِالْجَنَّةِ", english: "Those who say: Our Lord is Allah, then remain steadfast — the angels descend on them: Do not fear or grieve, but rejoice in Paradise.", ref: "Fussilat 41:30", key: "41:30" },
-    { arabic: "هُوَ الَّذِي يَقْبَلُ التَّوْبَةَ عَنْ عِبَادِهِ وَيَعْفُو عَنِ السَّيِّئَاتِ وَيَعْلَمُ مَا تَفْعَلُونَ", english: "He is the One Who accepts repentance from His servants, pardons sins, and knows all that you do.", ref: "Ash-Shura 42:25", key: "42:25" },
-    { arabic: "وَيَسْتَجِيبُ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَيَزِيدُهُم مِّن فَضْلِهِ", english: "He responds to those who believe and do good, and increases them from His bounty.", ref: "Ash-Shura 42:26", key: "42:26" }
-  ],
-  [
-    { arabic: "وَمَا خَلَقْنَا السَّمَاوَاتِ وَالْأَرْضَ وَمَا بَيْنَهُمَا إِلَّا بِالْحَقِّ وَأَجَلٍ مُّسَمًّى", english: "We did not create the heavens, earth and everything between them except for a purpose and a fixed term.", ref: "Al-Ahqaf 46:3", key: "46:3" },
-    { arabic: "إِنَّمَا الْمُؤْمِنُونَ إِخْوَةٌ فَأَصْلِحُوا بَيْنَ أَخَوَيْكُمْ ۚ وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُرْحَمُونَ", english: "The believers are but one brotherhood, so make peace between your brothers and be mindful of Allah so you may be shown mercy.", ref: "Al-Hujurat 49:10", key: "49:10" },
-    { arabic: "يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا ۚ إِنَّ أَكْرَمَكُمْ عِندَ اللَّهِ أَتْقَاكُمْ", english: "O humanity! We created you from a male and female and made you into peoples and tribes so you may know one another. The most noble of you in Allah's sight is the most righteous.", ref: "Al-Hujurat 49:13", key: "49:13" }
-  ],
-  [
-    { arabic: "الرَّحْمَٰنُ ۝ عَلَّمَ الْقُرْآنَ ۝ خَلَقَ الْإِنسَانَ ۝ عَلَّمَهُ الْبَيَانَ", english: "The Most Merciful — taught the Quran — created humanity — and taught them speech.", ref: "Ar-Rahman 55:1-4", key: "55:1" },
-    { arabic: "فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ", english: "So which of your Lord's favours would you both deny?", ref: "Ar-Rahman 55:13", key: "55:13" },
-    { arabic: "كُلُّ مَنْ عَلَيْهَا فَانٍ ۝ وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ", english: "Everyone upon earth will perish — and the Face of your Lord full of majesty and honour will remain.", ref: "Ar-Rahman 55:26-27", key: "55:26" }
-  ],
-  [
-    { arabic: "إِنَّهُ لَقُرْآنٌ كَرِيمٌ ۝ فِي كِتَابٍ مَّكْنُونٍ ۝ لَّا يَمَسُّهُ إِلَّا الْمُطَهَّرُونَ ۝ تَنزِيلٌ مِّن رَّبِّ الْعَالَمِينَ", english: "This is truly a noble Quran — in a well-preserved Record — touched only by the purified — a revelation from the Lord of all worlds.", ref: "Al-Waqi'ah 56:77-80", key: "56:77" },
-    { arabic: "سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ", english: "Whatever is in the heavens and earth glorifies Allah — He is the Almighty, All-Wise.", ref: "Al-Hadid 57:1", key: "57:1" },
-    { arabic: "هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ ۖ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ", english: "He is the First and the Last, the Most High and Most Near, and He has full knowledge of everything.", ref: "Al-Hadid 57:3", key: "57:3" }
-  ],
-  [
-    { arabic: "هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمَٰنُ الرَّحِيمُ", english: "He is Allah — there is no god except Him, Knower of the seen and unseen. He is the Most Gracious, Most Merciful.", ref: "Al-Hashr 59:22", key: "59:22" },
-    { arabic: "هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ", english: "He is Allah: the King, the Most Holy, the All-Perfect, the Source of Serenity, the Watcher, the Almighty, the Supreme in Might, the Majestic.", ref: "Al-Hashr 59:23", key: "59:23" },
-    { arabic: "هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْأَسْمَاءُ الْحُسْنَىٰ ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ", english: "He is Allah: the Creator, the Originator, the Fashioner. He has the most beautiful names. All in the heavens and earth glorify Him.", ref: "Al-Hashr 59:24", key: "59:24" }
-  ],
-  [
-    { arabic: "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ۝ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ", english: "Whoever is mindful of Allah, He will make a way out for them — and provide for them from sources they could never imagine.", ref: "At-Talaq 65:2-3", key: "65:2" },
-    { arabic: "وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ۚ إِنَّ اللَّهَ بَالِغُ أَمْرِهِ ۚ قَدْ جَعَلَ اللَّهُ لِكُلِّ شَيْءٍ قَدْرًا", english: "Whoever puts their trust in Allah — He alone is sufficient. Allah will surely accomplish His purpose. Allah has set a decreed measure for everything.", ref: "At-Talaq 65:3", key: "65:3" },
-    { arabic: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ", english: "Blessed is He in Whose hands is all authority, and He is Most Capable of everything.", ref: "Al-Mulk 67:1", key: "67:1" }
-  ],
-  [
-    { arabic: "الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ الْعَزِيزُ الْغَفُورُ", english: "Who created death and life to test which of you is best in deeds. He is the Almighty, All-Forgiving.", ref: "Al-Mulk 67:2", key: "67:2" },
-    { arabic: "الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ", english: "Who created seven heavens, one above another. You will not see any imperfection in the creation of the Most Merciful.", ref: "Al-Mulk 67:3", key: "67:3" },
-    { arabic: "وَلَقَدْ زَيَّنَّا السَّمَاءَ الدُّنْيَا بِمَصَابِيحَ وَجَعَلْنَاهَا رُجُومًا لِّلشَّيَاطِينِ", english: "And We have certainly beautified the nearest heaven with stars and made them as missiles against the devils.", ref: "Al-Mulk 67:5", key: "67:5" }
-  ]
+/* 01 Al-Fatiha 1:2-4 */
+[{arabic:"الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",english:"All praise is for Allah, Lord of all worlds.",ref:"Al-Fatiha 1:2",key:"1:2"},{arabic:"الرَّحْمَٰنِ الرَّحِيمِ",english:"The Most Gracious, Most Merciful.",ref:"Al-Fatiha 1:3",key:"1:3"},{arabic:"مَالِكِ يَوْمِ الدِّينِ",english:"Master of the Day of Judgment.",ref:"Al-Fatiha 1:4",key:"1:4"}],
+/* 02 Al-Fatiha 1:5-7 */
+[{arabic:"إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",english:"You alone we worship, and You alone we ask for help.",ref:"Al-Fatiha 1:5",key:"1:5"},{arabic:"اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",english:"Guide us along the straight path.",ref:"Al-Fatiha 1:6",key:"1:6"},{arabic:"صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",english:"The path of those You have blessed — not those You are angry with, or those who are astray.",ref:"Al-Fatiha 1:7",key:"1:7"}],
+/* 03 Al-Baqarah 2:2-4 */
+[{arabic:"ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ",english:"This is the Book — there is no doubt in it — a guidance for those mindful of Allah.",ref:"Al-Baqarah 2:2",key:"2:2"},{arabic:"الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ",english:"Those who believe in the unseen, establish prayer, and donate from what We have provided for them.",ref:"Al-Baqarah 2:3",key:"2:3"},{arabic:"وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ",english:"And who believe in what has been revealed to you and what was revealed before you, and who are certain of the Hereafter.",ref:"Al-Baqarah 2:4",key:"2:4"}],
+/* 04 Al-Baqarah 2:153-155 */
+[{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",english:"O believers! Seek help through patience and prayer. Surely Allah is with those who are patient.",ref:"Al-Baqarah 2:153",key:"2:153"},{arabic:"وَلَا تَقُولُوا لِمَن يُقْتَلُ فِي سَبِيلِ اللَّهِ أَمْوَاتٌ ۚ بَلْ أَحْيَاءٌ وَلَٰكِن لَّا تَشْعُرُونَ",english:"Do not say that those killed in Allah's cause are dead — they are alive, but you do not perceive it.",ref:"Al-Baqarah 2:154",key:"2:154"},{arabic:"وَلَنَبْلُوَنَّكُم بِشَيْءٍ مِّنَ الْخَوْفِ وَالْجُوعِ وَنَقْصٍ مِّنَ الْأَمْوَالِ وَالْأَنفُسِ وَالثَّمَرَاتِ ۗ وَبَشِّرِ الصَّابِرِينَ",english:"We will certainly test you with some fear and hunger and loss of wealth, lives, and crops. Give good news to those who patiently endure.",ref:"Al-Baqarah 2:155",key:"2:155"}],
+/* 05 Al-Baqarah 2:156-158 */
+[{arabic:"الَّذِينَ إِذَا أَصَابَتْهُم مُّصِيبَةٌ قَالُوا إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",english:"Those who, when struck by a disaster, say: Indeed we belong to Allah, and indeed to Him we will return.",ref:"Al-Baqarah 2:156",key:"2:156"},{arabic:"أُولَٰئِكَ عَلَيْهِمْ صَلَوَاتٌ مِّن رَّبِّهِمْ وَرَحْمَةٌ ۖ وَأُولَٰئِكَ هُمُ الْمُهْتَدُونَ",english:"It is they who will receive blessings and mercy from their Lord — they are the rightly guided.",ref:"Al-Baqarah 2:157",key:"2:157"},{arabic:"إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ ۖ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَن يَطَّوَّفَ بِهِمَا ۚ وَمَن تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ",english:"Indeed Safa and Marwah are among the symbols of Allah. So whoever performs the major or minor pilgrimage, let them walk between them. And whoever does good willingly — Allah is truly Appreciative, All-Knowing.",ref:"Al-Baqarah 2:158",key:"2:158"}],
+/* 06 Al-Baqarah 2:186-188 */
+[{arabic:"وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ ۖ فَلْيَسْتَجِيبُوا لِي وَلْيُؤْمِنُوا بِي لَعَلَّهُمْ يَرْشُدُونَ",english:"When My servants ask you about Me — I am truly near. I respond to the caller when they call upon Me. So let them respond to Me and believe in Me, so they may be guided.",ref:"Al-Baqarah 2:186",key:"2:186"},{arabic:"أُحِلَّ لَكُمْ لَيْلَةَ الصِّيَامِ الرَّفَثُ إِلَىٰ نِسَائِكُمْ ۚ هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ ۗ عَلِمَ اللَّهُ أَنَّكُمْ كُنتُمْ تَخْتَانُونَ أَنفُسَكُمْ فَتَابَ عَلَيْكُمْ وَعَفَا عَنكُمْ ۖ فَالْآنَ بَاشِرُوهُنَّ وَابْتَغُوا مَا كَتَبَ اللَّهُ لَكُمْ ۚ وَكُلُوا وَاشْرَبُوا حَتَّىٰ يَتَبَيَّنَ لَكُمُ الْخَيْطُ الْأَبْيَضُ مِنَ الْخَيْطِ الْأَسْوَدِ مِنَ الْفَجْرِ ۖ ثُمَّ أَتِمُّوا الصِّيَامَ إِلَى اللَّيْلِ",english:"It is made permissible for you to be intimate with your wives on the nights of the fast — they are a garment for you and you for them. Allah knew you were betraying yourselves, so He accepted your repentance and forgave you. Now be intimate with them and seek what Allah has ordained. Eat and drink until the white thread of dawn is distinct from the black. Then complete the fast until nightfall.",ref:"Al-Baqarah 2:187",key:"2:187"},{arabic:"وَلَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ وَتُدْلُوا بِهَا إِلَى الْحُكَّامِ لِتَأْكُلُوا فَرِيقًا مِّنْ أَمْوَالِ النَّاسِ بِالْإِثْمِ وَأَنتُمْ تَعْلَمُونَ",english:"Do not devour one another's wealth unjustly, nor bribe authorities to devour a portion of others' wealth sinfully while you know.",ref:"Al-Baqarah 2:188",key:"2:188"}],
+/* 07 Al-Baqarah 2:255-257 (Ayat al-Kursi group) */
+[{arabic:"اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",english:"Allah — there is no god except Him, the Ever-Living, the Sustainer of all. Neither drowsiness nor sleep overtakes Him. To Him belongs everything in the heavens and earth. Who can intercede with Him except by His permission? He knows what is before them and what is after them, and they cannot encompass any of His knowledge except what He wills. His Throne extends over the heavens and earth, and their preservation does not tire Him. He is the Most High, the Most Great.",ref:"Al-Baqarah 2:255 (Ayat al-Kursi)",key:"2:255"},{arabic:"لَا إِكْرَاهَ فِي الدِّينِ ۖ قَد تَّبَيَّنَ الرُّشْدُ مِنَ الْغَيِّ ۚ فَمَن يَكْفُرْ بِالطَّاغُوتِ وَيُؤْمِن بِاللَّهِ فَقَدِ اسْتَمْسَكَ بِالْعُرْوَةِ الْوُثْقَىٰ لَا انفِصَامَ لَهَا ۗ وَاللَّهُ سَمِيعٌ عَلِيمٌ",english:"There is no compulsion in religion. Right has become distinct from wrong. Whoever renounces false gods and believes in Allah has grasped the most trustworthy handhold that never breaks. Allah is All-Hearing, All-Knowing.",ref:"Al-Baqarah 2:256",key:"2:256"},{arabic:"اللَّهُ وَلِيُّ الَّذِينَ آمَنُوا يُخْرِجُهُم مِّنَ الظُّلُمَاتِ إِلَى النُّورِ ۖ وَالَّذِينَ كَفَرُوا أَوْلِيَاؤُهُمُ الطَّاغُوتُ يُخْرِجُونَهُم مِّنَ النُّورِ إِلَى الظُّلُمَاتِ ۗ أُولَٰئِكَ أَصْحَابُ النَّارِ ۖ هُمْ فِيهَا خَالِدُونَ",english:"Allah is the Guardian of the believers — He brings them out of darkness into light. The disbelievers' guardians are false gods who lead them from light into darkness. Those are the residents of the Fire, and they will remain there forever.",ref:"Al-Baqarah 2:257",key:"2:257"}],
+/* 08 Al-Baqarah 2:284-286 */
+[{arabic:"لِّلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ وَإِن تُبْدُوا مَا فِي أَنفُسِكُمْ أَوْ تُخْفُوهُ يُحَاسِبْكُم بِهِ اللَّهُ ۖ فَيَغْفِرُ لِمَن يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ ۗ وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",english:"To Allah belongs everything in the heavens and earth. Whether you reveal what is within yourselves or conceal it, Allah will call you to account for it. He forgives whoever He wills and punishes whoever He wills. Allah is Most Capable of everything.",ref:"Al-Baqarah 2:284",key:"2:284"},{arabic:"آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ",english:"The Messenger believed in what was revealed to him from his Lord, and so have the believers. All believe in Allah, His angels, His books, and His messengers, making no distinction between any of His messengers. They say: We hear and we obey. Your forgiveness, our Lord! And to You is the final return.",ref:"Al-Baqarah 2:285",key:"2:285"},{arabic:"لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",english:"Allah does not burden any soul with more than it can bear. It has what it earned, and against it what it committed. Our Lord! Do not punish us if we forget or make a mistake. Our Lord! Do not burden us as You burdened those before us. Our Lord! Do not burden us with what we cannot bear. Pardon us, forgive us, and have mercy on us. You are our Guardian, so grant us victory over the disbelieving people.",ref:"Al-Baqarah 2:286",key:"2:286"}],
+/* 09 Ali Imran 3:8-10 */
+[{arabic:"رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ",english:"Our Lord! Do not let our hearts deviate after You have guided us. Grant us Your mercy — You are indeed the Giver of all bounties.",ref:"Ali 'Imran 3:8",key:"3:8"},{arabic:"رَبَّنَا إِنَّكَ جَامِعُ النَّاسِ لِيَوْمٍ لَّا رَيْبَ فِيهِ ۚ إِنَّ اللَّهَ لَا يُخْلِفُ الْمِيعَادَ",english:"Our Lord! You will surely gather all people on the Day about which there is no doubt. Surely Allah does not break His promise.",ref:"Ali 'Imran 3:9",key:"3:9"},{arabic:"إِنَّ الَّذِينَ كَفَرُوا لَن تُغْنِيَ عَنْهُمْ أَمْوَالُهُمْ وَلَا أَوْلَادُهُم مِّنَ اللَّهِ شَيْئًا ۖ وَأُولَٰئِكَ هُمْ وَقُودُ النَّارِ",english:"Those who disbelieve — neither their wealth nor their children will avail them against Allah in the least. They will be fuel for the Fire.",ref:"Ali 'Imran 3:10",key:"3:10"}],
+/* 10 Ali Imran 3:185-187 */
+[{arabic:"كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ۗ وَإِنَّمَا تُوَفَّوْنَ أُجُورَكُمْ يَوْمَ الْقِيَامَةِ ۖ فَمَن زُحْزِحَ عَنِ النَّارِ وَأُدْخِلَ الْجَنَّةَ فَقَدْ فَازَ ۗ وَمَا الْحَيَاةُ الدُّنْيَا إِلَّا مَتَاعُ الْغُرُورِ",english:"Every soul will taste death, and you will only receive your full reward on the Day of Judgment. Whoever is spared from the Fire and admitted into Paradise will have truly succeeded. The life of this world is nothing but the enjoyment of delusion.",ref:"Ali 'Imran 3:185",key:"3:185"},{arabic:"لَتُبْلَوُنَّ فِي أَمْوَالِكُمْ وَأَنفُسِكُمْ وَلَتَسْمَعُنَّ مِنَ الَّذِينَ أُوتُوا الْكِتَابَ مِن قَبْلِكُمْ وَمِنَ الَّذِينَ أَشْرَكُوا أَذًى كَثِيرًا ۚ وَإِن تَصْبِرُوا وَتَتَّقُوا فَإِنَّ ذَٰلِكَ مِنْ عَزْمِ الْأُمُورِ",english:"You will surely be tested in your wealth and yourselves, and you will hear many hurtful words from those given the Scripture before you and from the polytheists. But if you are patient and mindful of Allah — surely this is a resolve worth aspiring to.",ref:"Ali 'Imran 3:186",key:"3:186"},{arabic:"وَإِذْ أَخَذَ اللَّهُ مِيثَاقَ الَّذِينَ أُوتُوا الْكِتَابَ لَتُبَيِّنُنَّهُ لِلنَّاسِ وَلَا تَكْتُمُونَهُ فَنَبَذُوهُ وَرَاءَ ظُهُورِهِمْ وَاشْتَرَوْا بِهِ ثَمَنًا قَلِيلًا ۖ فَبِئْسَ مَا يَشْتَرُونَ",english:"And remember when Allah took a covenant from those given the Scripture to make it known to people and not conceal it — yet they cast it behind their backs and traded it for a fleeting gain. How evil is their trade!",ref:"Ali 'Imran 3:187",key:"3:187"}],
+/* 11 Ali Imran 3:190-192 */
+[{arabic:"إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ",english:"Indeed in the creation of the heavens and earth, and the alternation of night and day, there are signs for people of sound understanding.",ref:"Ali 'Imran 3:190",key:"3:190"},{arabic:"الَّذِينَ يَذْكُرُونَ اللَّهَ قِيَامًا وَقُعُودًا وَعَلَىٰ جُنُوبِهِمْ وَيَتَفَكَّرُونَ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ رَبَّنَا مَا خَلَقْتَ هَٰذَا بَاطِلًا سُبْحَانَكَ فَقِنَا عَذَابَ النَّارِ",english:"Those who remember Allah standing, sitting, and on their sides, and reflect on the creation of the heavens and earth, saying: Our Lord! You have not created all of this without purpose — glory be to You! Protect us from the torment of the Fire.",ref:"Ali 'Imran 3:191",key:"3:191"},{arabic:"رَبَّنَا إِنَّكَ مَن تُدْخِلِ النَّارَ فَقَدْ أَخْزَيْتَهُ ۖ وَمَا لِلظَّالِمِينَ مِنْ أَنصَارٍ",english:"Our Lord! Whoever You commit to the Fire, You have truly disgraced them. And the wrongdoers will have no helpers.",ref:"Ali 'Imran 3:192",key:"3:192"}],
+/* 12 An-Nisa 4:36-38 */
+[{arabic:"وَاعْبُدُوا اللَّهَ وَلَا تُشْرِكُوا بِهِ شَيْئًا ۖ وَبِالْوَالِدَيْنِ إِحْسَانًا وَبِذِي الْقُرْبَىٰ وَالْيَتَامَىٰ وَالْمَسَاكِينِ وَالْجَارِ ذِي الْقُرْبَىٰ وَالْجَارِ الْجُنُبِ وَالصَّاحِبِ بِالْجَنبِ وَابْنِ السَّبِيلِ وَمَا مَلَكَتْ أَيْمَانُكُمْ ۗ إِنَّ اللَّهَ لَا يُحِبُّ مَن كَانَ مُخْتَالًا فَخُورًا",english:"Worship Allah and associate nothing with Him. Be good to parents, relatives, orphans, the needy, the near neighbour, the distant neighbour, the companion at your side, the traveller, and those your right hands possess. Indeed Allah does not like those who are self-deluding and boastful.",ref:"An-Nisa 4:36",key:"4:36"},{arabic:"الَّذِينَ يَبْخَلُونَ وَيَأْمُرُونَ النَّاسَ بِالْبُخْلِ وَيَكْتُمُونَ مَا آتَاهُمُ اللَّهُ مِن فَضْلِهِ ۗ وَأَعْتَدْنَا لِلْكَافِرِينَ عَذَابًا مُّهِينًا",english:"Those who are miserly and encourage others to be miserly and conceal what Allah has given them from His bounty — We have prepared for the disbelievers a humiliating punishment.",ref:"An-Nisa 4:37",key:"4:37"},{arabic:"وَالَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ رِئَاءَ النَّاسِ وَلَا يُؤْمِنُونَ بِاللَّهِ وَلَا بِالْيَوْمِ الْآخِرِ ۗ وَمَن يَكُنِ الشَّيْطَانُ لَهُ قَرِينًا فَسَاءَ قَرِينًا",english:"And those who spend their wealth to be seen by people and believe neither in Allah nor in the Last Day — Satan is their companion, and what an evil companion!",ref:"An-Nisa 4:38",key:"4:38"}],
+/* 13 Al-Ma'idah 5:1-3 */
+[{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ ۚ أُحِلَّتْ لَكُم بَهِيمَةُ الْأَنْعَامِ إِلَّا مَا يُتْلَىٰ عَلَيْكُمْ غَيْرَ مُحِلِّي الصَّيْدِ وَأَنتُمْ حُرُمٌ ۗ إِنَّ اللَّهَ يَحْكُمُ مَا يُرِيدُ",english:"O believers! Fulfil your obligations. Lawful for you are all grazing livestock — except what is announced to you — game not being lawful while you are in ihram. Surely Allah commands whatever He wills.",ref:"Al-Ma'idah 5:1",key:"5:1"},{arabic:"وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ ۖ وَلَا تَعَاوَنُوا عَلَى الْإِثْمِ وَالْعُدْوَانِ ۚ وَاتَّقُوا اللَّهَ ۖ إِنَّ اللَّهَ شَدِيدُ الْعِقَابِ",english:"Cooperate in goodness and righteousness, and do not cooperate in sin and transgression. And be mindful of Allah — surely Allah is severe in punishment.",ref:"Al-Ma'idah 5:2",key:"5:2"},{arabic:"الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِي وَرَضِيتُ لَكُمُ الْإِسْلَامَ دِينًا ۚ فَمَنِ اضْطُرَّ فِي مَخْمَصَةٍ غَيْرَ مُتَجَانِفٍ لِّإِثْمٍ ۙ فَإِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ",english:"Today I have perfected your faith, completed My favour upon you, and chosen Islam as your way. But whoever is compelled by severe hunger with no intention of sin — then surely Allah is All-Forgiving, Most Merciful.",ref:"Al-Ma'idah 5:3",key:"5:3"}],
+/* 14 Al-An'am 6:95-97 */
+[{arabic:"إِنَّ اللَّهَ فَالِقُ الْحَبِّ وَالنَّوَىٰ ۖ يُخْرِجُ الْحَيَّ مِنَ الْمَيِّتِ وَمُخْرِجُ الْمَيِّتِ مِنَ الْحَيِّ ۚ ذَٰلِكُمُ اللَّهُ ۖ فَأَنَّىٰ تُؤْفَكُونَ",english:"Indeed Allah causes the grain and the seed to split and sprout. He brings the living from the dead and the dead from the living. That is Allah — so how are you deluded away from Him?",ref:"Al-An'am 6:95",key:"6:95"},{arabic:"فَالِقُ الْإِصْبَاحِ وَجَعَلَ اللَّيْلَ سَكَنًا وَالشَّمْسَ وَالْقَمَرَ حُسْبَانًا ۚ ذَٰلِكَ تَقْدِيرُ الْعَزِيزِ الْعَلِيمِ",english:"He is the Cleaver of daybreak. He made the night for rest and the sun and moon for reckoning. That is the design of the Almighty, All-Knowing.",ref:"Al-An'am 6:96",key:"6:96"},{arabic:"وَهُوَ الَّذِي جَعَلَ لَكُمُ النُّجُومَ لِتَهْتَدُوا بِهَا فِي ظُلُمَاتِ الْبَرِّ وَالْبَحْرِ ۗ قَدْ فَصَّلْنَا الْآيَاتِ لِقَوْمٍ يَعْلَمُونَ",english:"He is the One Who made the stars so you may guide yourselves through the darkness of land and sea. We have made the signs clear for people who have knowledge.",ref:"Al-An'am 6:97",key:"6:97"}],
+/* 15 Al-A'raf 7:54-56 */
+[{arabic:"إِنَّ رَبَّكُمُ اللَّهُ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ ثُمَّ اسْتَوَىٰ عَلَى الْعَرْشِ يُغْشِي اللَّيْلَ النَّهَارَ يَطْلُبُهُ حَثِيثًا وَالشَّمْسَ وَالْقَمَرَ وَالنُّجُومَ مُسَخَّرَاتٍ بِأَمْرِهِ ۗ أَلَا لَهُ الْخَلْقُ وَالْأَمْرُ ۗ تَبَارَكَ اللَّهُ رَبُّ الْعَالَمِينَ",english:"Indeed your Lord is Allah Who created the heavens and earth in six days then established Himself on the Throne. He covers the night with the day, each chasing the other swiftly. The sun, moon, and stars are subjected by His command. Surely all creation and authority belong to Him. Blessed is Allah, Lord of all worlds.",ref:"Al-A'raf 7:54",key:"7:54"},{arabic:"ادْعُوا رَبَّكُمْ تَضَرُّعًا وَخُفْيَةً ۚ إِنَّهُ لَا يُحِبُّ الْمُعْتَدِينَ",english:"Call upon your Lord humbly and privately. Surely He does not like the transgressors.",ref:"Al-A'raf 7:55",key:"7:55"},{arabic:"وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا وَادْعُوهُ خَوْفًا وَطَمَعًا ۚ إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِّنَ الْمُحْسِنِينَ",english:"Do not spread corruption in the land after it has been set in order. Call upon Him with hope and fear — certainly Allah's mercy is near to the good-doers.",ref:"Al-A'raf 7:56",key:"7:56"}],
+/* 16 Al-Anfal 8:2-4 */
+[{arabic:"إِنَّمَا الْمُؤْمِنُونَ الَّذِينَ إِذَا ذُكِرَ اللَّهُ وَجِلَتْ قُلُوبُهُمْ وَإِذَا تُلِيَتْ عَلَيْهِمْ آيَاتُهُ زَادَتْهُمْ إِيمَانًا وَعَلَىٰ رَبِّهِمْ يَتَوَكَّلُونَ",english:"The believers are only those whose hearts tremble at the mention of Allah, whose faith increases when His revelations are recited to them, and who put their trust in their Lord.",ref:"Al-Anfal 8:2",key:"8:2"},{arabic:"الَّذِينَ يُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ",english:"Those who establish prayer and donate from what We have provided for them.",ref:"Al-Anfal 8:3",key:"8:3"},{arabic:"أُولَٰئِكَ هُمُ الْمُؤْمِنُونَ حَقًّا ۚ لَّهُمْ دَرَجَاتٌ عِندَ رَبِّهِمْ وَمَغْفِرَةٌ وَرِزْقٌ كَرِيمٌ",english:"It is they who are truly believers. They will have elevated ranks, forgiveness, and an honourable provision from their Lord.",ref:"Al-Anfal 8:4",key:"8:4"}],
+/* 17 Yunus 10:62-64 */
+[{arabic:"أَلَا إِنَّ أَوْلِيَاءَ اللَّهِ لَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ",english:"Indeed the friends of Allah have nothing to fear, nor will they grieve.",ref:"Yunus 10:62",key:"10:62"},{arabic:"الَّذِينَ آمَنُوا وَكَانُوا يَتَّقُونَ",english:"Those who believed and were mindful of Allah.",ref:"Yunus 10:63",key:"10:63"},{arabic:"لَهُمُ الْبُشْرَىٰ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ ۚ لَا تَبْدِيلَ لِكَلِمَاتِ اللَّهِ ۚ ذَٰلِكَ هُوَ الْفَوْزُ الْعَظِيمُ",english:"For them is good news in this worldly life and in the Hereafter. There is no change in the words of Allah — that is the supreme triumph.",ref:"Yunus 10:64",key:"10:64"}],
+/* 18 Hud 11:88-90 */
+[{arabic:"قَالَ يَا قَوْمِ أَرَأَيْتُمْ إِن كُنتُ عَلَىٰ بَيِّنَةٍ مِّن رَّبِّي وَرَزَقَنِي مِنْهُ رِزْقًا حَسَنًا ۚ وَمَا أُرِيدُ أَنْ أُخَالِفَكُمْ إِلَىٰ مَا أَنْهَاكُمْ عَنْهُ ۚ إِنْ أُرِيدُ إِلَّا الْإِصْلَاحَ مَا اسْتَطَعْتُ ۚ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ۚ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ",english:"He said: O my people! If I stand on clear evidence from my Lord and He has provided good sustenance from Him — I have no desire to do what I forbid you from. I only desire reform as much as I can. My success comes only through Allah. In Him I trust and to Him I turn.",ref:"Hud 11:88",key:"11:88"},{arabic:"وَيَا قَوْمِ لَا يَجْرِمَنَّكُمْ شِقَاقِي أَن يُصِيبَكُم مِّثْلُ مَا أَصَابَ قَوْمَ نُوحٍ أَوْ قَوْمَ هُودٍ أَوْ قَوْمَ صَالِحٍ ۚ وَمَا قَوْمُ لُوطٍ مِّنكُم بِبَعِيدٍ",english:"O my people! Do not let opposition to me cause you to suffer what befell the people of Noah, Hud, or Salih — and the people of Lot are not far from you.",ref:"Hud 11:89",key:"11:89"},{arabic:"وَاسْتَغْفِرُوا رَبَّكُمْ ثُمَّ تُوبُوا إِلَيْهِ ۚ إِنَّ رَبِّي رَحِيمٌ وَدُودٌ",english:"Seek your Lord's forgiveness and turn to Him in repentance. Surely my Lord is Most Merciful, Most Loving.",ref:"Hud 11:90",key:"11:90"}],
+/* 19 Yusuf 12:86-88 */
+[{arabic:"قَالَ إِنَّمَا أَشْكُو بَثِّي وَحُزْنِي إِلَى اللَّهِ وَأَعْلَمُ مِنَ اللَّهِ مَا لَا تَعْلَمُونَ",english:"He said: I only complain of my anguish and grief to Allah, and I know from Allah what you do not know.",ref:"Yusuf 12:86",key:"12:86"},{arabic:"يَا بَنِيَّ اذْهَبُوا فَتَحَسَّسُوا مِن يُوسُفَ وَأَخِيهِ وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ ۖ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ",english:"O my sons! Go and search for Yusuf and his brother. And do not despair of Allah's mercy — surely none despairs of Allah's mercy except the disbelieving people.",ref:"Yusuf 12:87",key:"12:87"},{arabic:"فَلَمَّا دَخَلُوا عَلَيْهِ قَالُوا يَا أَيُّهَا الْعَزِيزُ مَسَّنَا وَأَهْلَنَا الضُّرُّ وَجِئْنَا بِبِضَاعَةٍ مُّزْجَاةٍ فَأَوْفِ لَنَا الْكَيْلَ وَتَصَدَّقْ عَلَيْنَا ۖ إِنَّ اللَّهَ يَجْزِي الْمُتَصَدِّقِينَ",english:"When they entered his presence they said: O Chief Minister! Hardship has befallen us and our family. We have brought only a little money. Give us full measure and be charitable to us — surely Allah rewards the charitable.",ref:"Yusuf 12:88",key:"12:88"}],
+/* 20 Ibrahim 14:7-9 */
+[{arabic:"وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ",english:"Remember when your Lord proclaimed: If you are grateful, I will certainly give you more. But if you are ungrateful, surely My punishment is severe.",ref:"Ibrahim 14:7",key:"14:7"},{arabic:"وَقَالَ مُوسَىٰ إِن تَكْفُرُوا أَنتُمْ وَمَن فِي الْأَرْضِ جَمِيعًا فَإِنَّ اللَّهَ لَغَنِيٌّ حَمِيدٌ",english:"Moses added: If you and everyone on earth were to be ungrateful — surely Allah is Self-Sufficient, Praiseworthy.",ref:"Ibrahim 14:8",key:"14:8"},{arabic:"أَلَمْ يَأْتِكُمْ نَبَأُ الَّذِينَ مِن قَبْلِكُمْ قَوْمِ نُوحٍ وَعَادٍ وَثَمُودَ ۛ وَالَّذِينَ مِن بَعْدِهِمْ ۛ لَا يَعْلَمُهُمْ إِلَّا اللَّهُ ۚ جَاءَتْهُمْ رُسُلُهُم بِالْبَيِّنَاتِ فَرَدُّوا أَيْدِيَهُمْ فِي أَفْوَاهِهِمْ وَقَالُوا إِنَّا كَفَرْنَا بِمَا أُرْسِلْتُم بِهِ وَإِنَّا لَفِي شَكٍّ مِّمَّا تَدْعُونَنَا إِلَيْهِ مُرِيبٍ",english:"Have you not heard the stories of those before you — the peoples of Noah, Aad, Thamud, and those after them, known only to Allah? Their messengers came with clear proofs but they put their hands to their mouths and said: We deny what you were sent with, and we are in grave doubt about what you call us to.",ref:"Ibrahim 14:9",key:"14:9"}],
+/* 21 Al-Hijr 15:9-11 */
+[{arabic:"إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",english:"It is certainly We Who have revealed the Reminder, and it is certainly We Who will preserve it.",ref:"Al-Hijr 15:9",key:"15:9"},{arabic:"وَلَقَدْ أَرْسَلْنَا مِن قَبْلِكَ فِي شِيَعِ الْأَوَّلِينَ",english:"We certainly sent messengers before you among the earlier peoples.",ref:"Al-Hijr 15:10",key:"15:10"},{arabic:"وَمَا يَأْتِيهِم مِّن رَّسُولٍ إِلَّا كَانُوا بِهِ يَسْتَهْزِئُونَ",english:"And no messenger came to them without being ridiculed.",ref:"Al-Hijr 15:11",key:"15:11"}],
+/* 22 An-Nahl 16:90-92 */
+[{arabic:"إِنَّ اللَّهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَىٰ وَيَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ وَالْبَغْيِ ۚ يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُونَ",english:"Indeed Allah commands justice, grace, and generosity to relatives. He forbids indecency, wickedness, and transgression. He admonishes you so perhaps you will be mindful.",ref:"An-Nahl 16:90",key:"16:90"},{arabic:"وَأَوْفُوا بِعَهْدِ اللَّهِ إِذَا عَاهَدتُّمْ وَلَا تَنقُضُوا الْأَيْمَانَ بَعْدَ تَوْكِيدِهَا وَقَدْ جَعَلْتُمُ اللَّهَ عَلَيْكُمْ كَفِيلًا ۚ إِنَّ اللَّهَ يَعْلَمُ مَا تَفْعَلُونَ",english:"Fulfil Allah's covenant when you make a pledge. Do not break your oaths after confirming them, having made Allah a witness over you. Surely Allah knows all that you do.",ref:"An-Nahl 16:91",key:"16:91"},{arabic:"وَلَا تَكُونُوا كَالَّتِي نَقَضَتْ غَزْلَهَا مِن بَعْدِ قُوَّةٍ أَنكَاثًا تَتَّخِذُونَ أَيْمَانَكُمْ دَخَلًا بَيْنَكُمْ أَن تَكُونَ أُمَّةٌ هِيَ أَرْبَىٰ مِنْ أُمَّةٍ ۚ إِنَّمَا يَبْلُوكُمُ اللَّهُ بِهِ ۚ وَلَيُبَيِّنَنَّ لَكُمْ يَوْمَ الْقِيَامَةِ مَا كُنتُمْ فِيهِ تَخْتَلِفُونَ",english:"Do not be like the woman who unravels her yarn after spinning it firmly — using your oaths to deceive one another. Allah only tests you through this, and on the Day of Judgment He will make clear all that you differed about.",ref:"An-Nahl 16:92",key:"16:92"}],
+/* 23 Al-Isra 17:23-25 */
+[{arabic:"وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا ۚ إِمَّا يَبْلُغَنَّ عِندَكَ الْكِبَرَ أَحَدُهُمَا أَوْ كِلَاهُمَا فَلَا تَقُل لَّهُمَا أُفٍّ وَلَا تَنْهَرْهُمَا وَقُل لَّهُمَا قَوْلًا كَرِيمًا",english:"Your Lord has decreed that you worship none but Him, and that you be kind to parents. If one or both of them reach old age with you, never say to them 'uff', never scold them, and always speak to them with honour.",ref:"Al-Isra 17:23",key:"17:23"},{arabic:"وَاخْفِضْ لَهُمَا جَنَاحَ الذُّلِّ مِنَ الرَّحْمَةِ وَقُل رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",english:"Be humble with them out of mercy, and pray: My Lord! Be merciful to them as they raised me when I was young.",ref:"Al-Isra 17:24",key:"17:24"},{arabic:"رَّبُّكُمْ أَعْلَمُ بِمَا فِي نُفُوسِكُمْ ۚ إِن تَكُونُوا صَالِحِينَ فَإِنَّهُ كَانَ لِلْأَوَّابِينَ غَفُورًا",english:"Your Lord knows best what is in your hearts. If you are righteous, He is certainly All-Forgiving to those who constantly turn to Him.",ref:"Al-Isra 17:25",key:"17:25"}],
+/* 24 Al-Kahf 18:28-30 */
+[{arabic:"وَاصْبِرْ نَفْسَكَ مَعَ الَّذِينَ يَدْعُونَ رَبَّهُم بِالْغَدَاةِ وَالْعَشِيِّ يُرِيدُونَ وَجْهَهُ ۖ وَلَا تَعْدُ عَيْنَاكَ عَنْهُمْ تُرِيدُ زِينَةَ الْحَيَاةِ الدُّنْيَا ۖ وَلَا تُطِعْ مَنْ أَغْفَلْنَا قَلْبَهُ عَن ذِكْرِنَا وَاتَّبَعَ هَوَاهُ وَكَانَ أَمْرُهُ فُرُطًا",english:"Keep yourself patient with those who call upon their Lord morning and evening seeking His pleasure. Do not let your eyes look away from them desiring worldly adornments. And do not obey those whose hearts We have made heedless of Our remembrance, who follow their desires and whose affairs are in disorder.",ref:"Al-Kahf 18:28",key:"18:28"},{arabic:"وَقُلِ الْحَقُّ مِن رَّبِّكُمْ ۖ فَمَن شَاءَ فَلْيُؤْمِن وَمَن شَاءَ فَلْيَكْفُرْ ۚ إِنَّا أَعْتَدْنَا لِلظَّالِمِينَ نَارًا أَحَاطَ بِهِمْ سُرَادِقُهَا ۚ وَإِن يَسْتَغِيثُوا يُغَاثُوا بِمَاءٍ كَالْمُهْلِ يَشْوِي الْوُجُوهَ ۚ بِئْسَ الشَّرَابُ وَسَاءَتْ مُرْتَفَقًا",english:"Proclaim: The truth is from your Lord. Whoever wills, let them believe. Whoever wills, let them disbelieve. We have prepared for the wrongdoers a Fire whose walls will surround them. If they cry for relief they will be given water like molten metal, scalding their faces. What a dreadful drink, and what a miserable resting place!",ref:"Al-Kahf 18:29",key:"18:29"},{arabic:"إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ إِنَّا لَا نُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا",english:"As for those who believe and do good — We certainly never deny the reward of those best in deeds.",ref:"Al-Kahf 18:30",key:"18:30"}],
+/* 25 Al-Kahf 18:107-109 */
+[{arabic:"إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ كَانَتْ لَهُمْ جَنَّاتُ الْفِرْدَوْسِ نُزُلًا",english:"Surely those who believe and do good will have the Gardens of Paradise as their welcome home.",ref:"Al-Kahf 18:107",key:"18:107"},{arabic:"خَالِدِينَ فِيهَا لَا يَبْغُونَ عَنْهَا حِوَلًا",english:"They will remain there forever, never wishing to leave.",ref:"Al-Kahf 18:108",key:"18:108"},{arabic:"قُل لَّوْ كَانَ الْبَحْرُ مِدَادًا لِّكَلِمَاتِ رَبِّي لَنَفِدَ الْبَحْرُ قَبْلَ أَن تَنفَدَ كَلِمَاتُ رَبِّي وَلَوْ جِئْنَا بِمِثْلِهِ مَدَدًا",english:"Say: If the ocean were ink for the words of my Lord, it would run dry before the words of my Lord were exhausted — even if We brought another ocean like it as a supplement.",ref:"Al-Kahf 18:109",key:"18:109"}],
+/* 26 Maryam 19:96-98 */
+[{arabic:"إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ سَيَجْعَلُ لَهُمُ الرَّحْمَٰنُ وُدًّا",english:"Surely those who believe and do good — the Most Merciful will instil love for them in hearts.",ref:"Maryam 19:96",key:"19:96"},{arabic:"فَإِنَّمَا يَسَّرْنَاهُ بِلِسَانِكَ لِتُبَشِّرَ بِهِ الْمُتَّقِينَ وَتُنذِرَ بِهِ قَوْمًا لُّدًّا",english:"We have made it easy in your own tongue so you may give good news to the righteous and warn the stubborn people.",ref:"Maryam 19:97",key:"19:97"},{arabic:"وَكَمْ أَهْلَكْنَا قَبْلَهُم مِّن قَرْنٍ هَلْ تُحِسُّ مِنْهُم مِّنْ أَحَدٍ أَوْ تَسْمَعُ لَهُمْ رِكْزًا",english:"How many generations have We destroyed before them! Can you find a single one of them, or even hear a whisper of them?",ref:"Maryam 19:98",key:"19:98"}],
+/* 27 Ta-Ha 20:25-28 */
+[{arabic:"قَالَ رَبِّ اشْرَحْ لِي صَدْرِي",english:"He said: My Lord! Uplift my heart for me,",ref:"Ta-Ha 20:25",key:"20:25"},{arabic:"وَيَسِّرْ لِي أَمْرِي",english:"And ease my task for me,",ref:"Ta-Ha 20:26",key:"20:26"},{arabic:"وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي ۝ يَفْقَهُوا قَوْلِي",english:"And remove the impediment from my tongue so that people may understand my speech.",ref:"Ta-Ha 20:27-28",key:"20:27"}],
+/* 28 Al-Anbiya 21:87-89 */
+[{arabic:"وَذَا النُّونِ إِذ ذَّهَبَ مُغَاضِبًا فَظَنَّ أَن لَّن نَّقْدِرَ عَلَيْهِ فَنَادَىٰ فِي الظُّلُمَاتِ أَن لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ",english:"And remember the man of the whale — when he stormed off in anger, thinking We would not restrict him. Then he cried out in the darkness: There is no god except You! Glory be to You! I have truly been one of the wrongdoers.",ref:"Al-Anbiya 21:87",key:"21:87"},{arabic:"فَاسْتَجَبْنَا لَهُ وَنَجَّيْنَاهُ مِنَ الْغَمِّ ۚ وَكَذَٰلِكَ نُنجِي الْمُؤْمِنِينَ",english:"So We responded to him and rescued him from anguish. And thus do We save the believers.",ref:"Al-Anbiya 21:88",key:"21:88"},{arabic:"وَزَكَرِيَّا إِذْ نَادَىٰ رَبَّهُ رَبِّ لَا تَذَرْنِي فَرْدًا وَأَنتَ خَيْرُ الْوَارِثِينَ",english:"And remember Zechariah — when he called upon his Lord: My Lord! Do not leave me without offspring, though You are the best of inheritors.",ref:"Al-Anbiya 21:89",key:"21:89"}],
+/* 29 Al-Mu'minun 23:1-3 */
+[{arabic:"قَدْ أَفْلَحَ الْمُؤْمِنُونَ",english:"Certainly the believers have succeeded —",ref:"Al-Mu'minun 23:1",key:"23:1"},{arabic:"الَّذِينَ هُمْ فِي صَلَاتِهِمْ خَاشِعُونَ",english:"Those who are humble in their prayers,",ref:"Al-Mu'minun 23:2",key:"23:2"},{arabic:"وَالَّذِينَ هُمْ عَنِ اللَّغْوِ مُعْرِضُونَ",english:"And those who avoid idle talk.",ref:"Al-Mu'minun 23:3",key:"23:3"}],
+/* 30 An-Nur 24:35-37 */
+[{arabic:"اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ ۚ مَثَلُ نُورِهِ كَمِشْكَاةٍ فِيهَا مِصْبَاحٌ ۖ الْمِصْبَاحُ فِي زُجَاجَةٍ ۖ الزُّجَاجَةُ كَأَنَّهَا كَوْكَبٌ دُرِّيٌّ يُوقَدُ مِن شَجَرَةٍ مُّبَارَكَةٍ زَيْتُونَةٍ لَّا شَرْقِيَّةٍ وَلَا غَرْبِيَّةٍ يَكَادُ زَيْتُهَا يُضِيءُ وَلَوْ لَمْ تَمْسَسْهُ نَارٌ ۚ نُّورٌ عَلَىٰ نُورٍ ۗ يَهْدِي اللَّهُ لِنُورِهِ مَن يَشَاءُ ۚ وَيَضْرِبُ اللَّهُ الْأَمْثَالَ لِلنَّاسِ ۗ وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ",english:"Allah is the Light of the heavens and earth. His light is like a niche in which there is a lamp, the lamp in a crystal, the crystal like a glowing star, lit from a blessed olive tree — neither of east nor west — whose oil would almost glow even without being touched by fire. Light upon light! Allah guides to His light whoever He wills. Allah sets forth parables for the people — Allah has full knowledge of all things.",ref:"An-Nur 24:35",key:"24:35"},{arabic:"فِي بُيُوتٍ أَذِنَ اللَّهُ أَن تُرْفَعَ وَيُذْكَرَ فِيهَا اسْمُهُ يُسَبِّحُ لَهُ فِيهَا بِالْغُدُوِّ وَالْآصَالِ",english:"In houses which Allah has ordered to be raised and His name to be remembered in them — people glorify Him there morning and evening.",ref:"An-Nur 24:36",key:"24:36"},{arabic:"رِجَالٌ لَّا تُلْهِيهِمْ تِجَارَةٌ وَلَا بَيْعٌ عَن ذِكْرِ اللَّهِ وَإِقَامِ الصَّلَاةِ وَإِيتَاءِ الزَّكَاةِ ۙ يَخَافُونَ يَوْمًا تَتَقَلَّبُ فِيهِ الْقُلُوبُ وَالْأَبْصَارُ",english:"Men whom neither commerce nor trade distracts from the remembrance of Allah, establishing prayer, and paying zakat — fearing a Day when hearts and eyes will be in turmoil.",ref:"An-Nur 24:37",key:"24:37"}],
+/* 31 Al-Furqan 25:63-65 */
+[{arabic:"وَعِبَادُ الرَّحْمَٰنِ الَّذِينَ يَمْشُونَ عَلَى الْأَرْضِ هَوْنًا وَإِذَا خَاطَبَهُمُ الْجَاهِلُونَ قَالُوا سَلَامًا",english:"The servants of the Most Merciful are those who walk the earth humbly, and when the ignorant address them, they say: Peace.",ref:"Al-Furqan 25:63",key:"25:63"},{arabic:"وَالَّذِينَ يَبِيتُونَ لِرَبِّهِمْ سُجَّدًا وَقِيَامًا",english:"And those who spend the night before their Lord, prostrating and standing.",ref:"Al-Furqan 25:64",key:"25:64"},{arabic:"وَالَّذِينَ يَقُولُونَ رَبَّنَا اصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ ۖ إِنَّ عَذَابَهَا كَانَ غَرَامًا",english:"And those who pray: Our Lord! Keep the punishment of Hell away from us — surely its punishment is a dreadful ordeal.",ref:"Al-Furqan 25:65",key:"25:65"}],
+/* 32 Ash-Shu'ara 26:88-90 */
+[{arabic:"يَوْمَ لَا يَنفَعُ مَالٌ وَلَا بَنُونَ",english:"The Day when neither wealth nor children will benefit —",ref:"Ash-Shu'ara 26:88",key:"26:88"},{arabic:"إِلَّا مَنْ أَتَى اللَّهَ بِقَلْبٍ سَلِيمٍ",english:"Except those who come to Allah with a pure heart.",ref:"Ash-Shu'ara 26:89",key:"26:89"},{arabic:"وَأُزْلِفَتِ الْجَنَّةُ لِلْمُتَّقِينَ",english:"And Paradise will be brought near to the righteous.",ref:"Ash-Shu'ara 26:90",key:"26:90"}],
+/* 33 An-Naml 27:62-64 */
+[{arabic:"أَمَّن يُجِيبُ الْمُضْطَرَّ إِذَا دَعَاهُ وَيَكْشِفُ السُّوءَ وَيَجْعَلُكُمْ خُلَفَاءَ الْأَرْضِ ۗ أَإِلَٰهٌ مَّعَ اللَّهِ ۚ قَلِيلًا مَّا تَذَكَّرُونَ",english:"Who responds to the distressed when they call upon Him, removes their affliction, and makes you successors on earth? Is there another god besides Allah? How little you reflect!",ref:"An-Naml 27:62",key:"27:62"},{arabic:"أَمَّن يَهْدِيكُمْ فِي ظُلُمَاتِ الْبَرِّ وَالْبَحْرِ وَمَن يُرْسِلُ الرِّيَاحَ بُشْرًا بَيْنَ يَدَيْ رَحْمَتِهِ ۗ أَإِلَٰهٌ مَّعَ اللَّهِ ۚ تَعَالَى اللَّهُ عَمَّا يُشْرِكُونَ",english:"Who guides you through the darkness of land and sea, and sends the winds as glad tidings before His mercy? Is there another god besides Allah? Exalted is Allah above what they associate with Him.",ref:"An-Naml 27:63",key:"27:63"},{arabic:"أَمَّن يَبْدَأُ الْخَلْقَ ثُمَّ يُعِيدُهُ وَمَن يَرْزُقُكُم مِّنَ السَّمَاءِ وَالْأَرْضِ ۗ أَإِلَٰهٌ مَّعَ اللَّهِ ۚ قُلْ هَاتُوا بُرْهَانَكُمْ إِن كُنتُمْ صَادِقِينَ",english:"Who originates creation then repeats it, and who provides for you from the sky and earth? Is there another god besides Allah? Say: Bring your proof if you are truthful.",ref:"An-Naml 27:64",key:"27:64"}],
+/* 34 Ar-Rum 30:21-23 */
+[{arabic:"وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ",english:"Among His signs is that He created spouses for you from among yourselves so you may find comfort in them, and He placed affection and mercy between you. Surely in this are signs for people who reflect.",ref:"Ar-Rum 30:21",key:"30:21"},{arabic:"وَمِنْ آيَاتِهِ خَلْقُ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافُ أَلْسِنَتِكُمْ وَأَلْوَانِكُمْ ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّلْعَالِمِينَ",english:"And among His signs is the creation of the heavens and earth and the diversity of your languages and colours. Surely in this are signs for those of knowledge.",ref:"Ar-Rum 30:22",key:"30:22"},{arabic:"وَمِنْ آيَاتِهِ مَنَامُكُم بِاللَّيْلِ وَالنَّهَارِ وَابْتِغَاؤُكُم مِّن فَضْلِهِ ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَسْمَعُونَ",english:"And among His signs is your sleep by night and by day, and your seeking of His bounty. Surely in this are signs for people who listen.",ref:"Ar-Rum 30:23",key:"30:23"}],
+/* 35 Luqman 31:13-15 */
+[{arabic:"وَإِذْ قَالَ لُقْمَانُ لِابْنِهِ وَهُوَ يَعِظُهُ يَا بُنَيَّ لَا تُشْرِكْ بِاللَّهِ ۖ إِنَّ الشِّرْكَ لَظُلْمٌ عَظِيمٌ",english:"And remember when Luqman said to his son while advising him: O my dear son! Never associate anything with Allah — associating others with Him is truly a grave wrong.",ref:"Luqman 31:13",key:"31:13"},{arabic:"وَوَصَّيْنَا الْإِنسَانَ بِوَالِدَيْهِ حَمَلَتْهُ أُمُّهُ وَهْنًا عَلَىٰ وَهْنٍ وَفِصَالُهُ فِي عَامَيْنِ أَنِ اشْكُرْ لِي وَلِوَالِدَيْكَ إِلَيَّ الْمَصِيرُ",english:"We have commanded people to honour their parents. His mother carried him through hardship upon hardship, and his weaning takes two years. So be grateful to Me and your parents. To Me is the final return.",ref:"Luqman 31:14",key:"31:14"},{arabic:"وَإِن جَاهَدَاكَ عَلَىٰ أَن تُشْرِكَ بِي مَا لَيْسَ لَكَ بِهِ عِلْمٌ فَلَا تُطِعْهُمَا ۖ وَصَاحِبْهُمَا فِي الدُّنْيَا مَعْرُوفًا ۖ وَاتَّبِعْ سَبِيلَ مَنْ أَنَابَ إِلَيَّ ۚ ثُمَّ إِلَيَّ مَرْجِعُكُمْ فَأُنَبِّئُكُم بِمَا كُنتُمْ تَعْمَلُونَ",english:"But if they pressure you to associate with Me what you have no knowledge of, do not obey them. Yet keep their company in this world courteously, and follow the path of those who turn to Me. Then to Me you will all return and I will inform you of what you used to do.",ref:"Luqman 31:15",key:"31:15"}],
+/* 36 As-Sajdah 32:15-17 */
+[{arabic:"إِنَّمَا يُؤْمِنُ بِآيَاتِنَا الَّذِينَ إِذَا ذُكِّرُوا بِهَا خَرُّوا سُجَّدًا وَسَبَّحُوا بِحَمْدِ رَبِّهِمْ وَهُمْ لَا يَسْتَكْبِرُونَ",english:"Only those who believe in Our signs — when reminded of them, they fall down in prostration and glorify their Lord with praise, and they are never arrogant.",ref:"As-Sajdah 32:15",key:"32:15"},{arabic:"تَتَجَافَىٰ جُنُوبُهُمْ عَنِ الْمَضَاجِعِ يَدْعُونَ رَبَّهُمْ خَوْفًا وَطَمَعًا وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ",english:"Their sides forsake their beds as they call upon their Lord with hope and fear, and donate from what We have provided them.",ref:"As-Sajdah 32:16",key:"32:16"},{arabic:"فَلَا تَعْلَمُ نَفْسٌ مَّا أُخْفِيَ لَهُم مِّن قُرَّةِ أَعْيُنٍ جَزَاءً بِمَا كَانُوا يَعْمَلُونَ",english:"No soul knows what joy is kept hidden for them as a reward for what they used to do.",ref:"As-Sajdah 32:17",key:"32:17"}],
+/* 37 Ya-Sin 36:1-3 */
+[{arabic:"يس",english:"Ya-Sin.",ref:"Ya-Sin 36:1",key:"36:1"},{arabic:"وَالْقُرْآنِ الْحَكِيمِ",english:"By the wise Quran!",ref:"Ya-Sin 36:2",key:"36:2"},{arabic:"إِنَّكَ لَمِنَ الْمُرْسَلِينَ",english:"You are truly one of the messengers.",ref:"Ya-Sin 36:3",key:"36:3"}],
+/* 38 Ya-Sin 36:81-83 */
+[{arabic:"أَوَلَيْسَ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ بِقَادِرٍ عَلَىٰ أَن يَخْلُقَ مِثْلَهُم ۚ بَلَىٰ وَهُوَ الْخَلَّاقُ الْعَلِيمُ",english:"Is not the One Who created the heavens and earth able to create the likes of them? Yes indeed! He is the Master Creator, the All-Knowing.",ref:"Ya-Sin 36:81",key:"36:81"},{arabic:"إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَن يَقُولَ لَهُ كُن فَيَكُونُ",english:"His command when He intends a thing is only to say: Be! — and it is.",ref:"Ya-Sin 36:82",key:"36:82"},{arabic:"فَسُبْحَانَ الَّذِي بِيَدِهِ مَلَكُوتُ كُلِّ شَيْءٍ وَإِلَيْهِ تُرْجَعُونَ",english:"So glory be to the One in Whose hands is the dominion of all things, and to Him you will all be returned.",ref:"Ya-Sin 36:83",key:"36:83"}],
+/* 39 Az-Zumar 39:53-55 */
+[{arabic:"قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا ۚ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",english:"Say: O My servants who have wronged themselves — never despair of Allah's mercy. Indeed Allah forgives all sins. He is truly the All-Forgiving, Most Merciful.",ref:"Az-Zumar 39:53",key:"39:53"},{arabic:"وَأَنِيبُوا إِلَىٰ رَبِّكُمْ وَأَسْلِمُوا لَهُ مِن قَبْلِ أَن يَأْتِيَكُمُ الْعَذَابُ ثُمَّ لَا تُنصَرُونَ",english:"Turn to your Lord and submit to Him before the punishment comes upon you, after which you will not be helped.",ref:"Az-Zumar 39:54",key:"39:54"},{arabic:"وَاتَّبِعُوا أَحْسَنَ مَا أُنزِلَ إِلَيْكُم مِّن رَّبِّكُم مِّن قَبْلِ أَن يَأْتِيَكُمُ الْعَذَابُ بَغْتَةً وَأَنتُمْ لَا تَشْعُرُونَ",english:"Follow the best of what has been revealed to you from your Lord before the punishment takes you by surprise while you are unaware.",ref:"Az-Zumar 39:55",key:"39:55"}],
+/* 40 Fussilat 41:30-32 */
+[{arabic:"إِنَّ الَّذِينَ قَالُوا رَبُّنَا اللَّهُ ثُمَّ اسْتَقَامُوا تَتَنَزَّلُ عَلَيْهِمُ الْمَلَائِكَةُ أَلَّا تَخَافُوا وَلَا تَحْزَنُوا وَأَبْشِرُوا بِالْجَنَّةِ الَّتِي كُنتُمْ تُوعَدُونَ",english:"Surely those who say Our Lord is Allah then remain steadfast — the angels descend upon them: Do not fear or grieve! Rather rejoice in the good news of Paradise which you were promised.",ref:"Fussilat 41:30",key:"41:30"},{arabic:"نَحْنُ أَوْلِيَاؤُكُمْ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ ۖ وَلَكُمْ فِيهَا مَا تَشْتَهِي أَنفُسُكُمْ وَلَكُمْ فِيهَا مَا تَدَّعُونَ",english:"We are your allies in this worldly life and in the Hereafter. There you will have whatever your souls desire, and whatever you call for.",ref:"Fussilat 41:31",key:"41:31"},{arabic:"نُزُلًا مِّنْ غَفُورٍ رَّحِيمٍ",english:"A welcoming gift from the All-Forgiving, Most Merciful.",ref:"Fussilat 41:32",key:"41:32"}],
+/* 41 Ash-Shura 42:25-27 */
+[{arabic:"وَهُوَ الَّذِي يَقْبَلُ التَّوْبَةَ عَنْ عِبَادِهِ وَيَعْفُو عَنِ السَّيِّئَاتِ وَيَعْلَمُ مَا تَفْعَلُونَ",english:"He is the One Who accepts repentance from His servants, pardons sins, and knows all that you do.",ref:"Ash-Shura 42:25",key:"42:25"},{arabic:"وَيَسْتَجِيبُ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَيَزِيدُهُم مِّن فَضْلِهِ ۚ وَالْكَافِرُونَ لَهُمْ عَذَابٌ شَدِيدٌ",english:"He responds to those who believe and do good and increases them from His bounty. As for the disbelievers, they will have a severe punishment.",ref:"Ash-Shura 42:26",key:"42:26"},{arabic:"وَلَوْ بَسَطَ اللَّهُ الرِّزْقَ لِعِبَادِهِ لَبَغَوْا فِي الْأَرْضِ وَلَٰكِن يُنَزِّلُ بِقَدَرٍ مَّا يَشَاءُ ۚ إِنَّهُ بِعِبَادِهِ خَبِيرٌ بَصِيرٌ",english:"If Allah were to increase provision for all His servants, they would rebel throughout the land. So He sends it down in measured amounts as He wills. Surely He is All-Aware and All-Seeing of His servants.",ref:"Ash-Shura 42:27",key:"42:27"}],
+/* 42 Al-Hujurat 49:10-12 */
+[{arabic:"إِنَّمَا الْمُؤْمِنُونَ إِخْوَةٌ فَأَصْلِحُوا بَيْنَ أَخَوَيْكُمْ ۚ وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُرْحَمُونَ",english:"The believers are but one brotherhood, so make peace between your brothers, and be mindful of Allah so you may be shown mercy.",ref:"Al-Hujurat 49:10",key:"49:10"},{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ وَلَا نِسَاءٌ مِّن نِّسَاءٍ عَسَىٰ أَن يَكُنَّ خَيْرًا مِّنْهُنَّ ۖ وَلَا تَلْمِزُوا أَنفُسَكُمْ وَلَا تَنَابَزُوا بِالْأَلْقَابِ ۖ بِئْسَ الِاسْمُ الْفُسُوقُ بَعْدَ الْإِيمَانِ ۚ وَمَن لَّمْ يَتُبْ فَأُولَٰئِكَ هُمُ الظَّالِمُونَ",english:"O believers! Do not let some people ridicule others — perhaps they are better. Nor let women ridicule other women — perhaps they are better. Do not defame one another nor call each other by offensive nicknames. How evil to act wickedly after having faith! And whoever does not repent — they are truly the wrongdoers.",ref:"Al-Hujurat 49:11",key:"49:11"},{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا اجْتَنِبُوا كَثِيرًا مِّنَ الظَّنِّ إِنَّ بَعْضَ الظَّنِّ إِثْمٌ ۖ وَلَا تَجَسَّسُوا وَلَا يَغْتَب بَّعْضُكُم بَعْضًا ۚ أَيُحِبُّ أَحَدُكُمْ أَن يَأْكُلَ لَحْمَ أَخِيهِ مَيْتًا فَكَرِهْتُمُوهُ ۚ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ تَوَّابٌ رَّحِيمٌ",english:"O believers! Avoid many suspicions — surely some suspicion is a sin. Do not spy on one another, nor backbite. Would any of you like to eat the flesh of your dead brother? You would detest it. So be mindful of Allah — surely Allah is the Accepter of repentance, Most Merciful.",ref:"Al-Hujurat 49:12",key:"49:12"}],
+/* 43 Al-Hujurat 49:13-15 */
+[{arabic:"يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا ۚ إِنَّ أَكْرَمَكُمْ عِندَ اللَّهِ أَتْقَاكُمْ ۚ إِنَّ اللَّهَ عَلِيمٌ خَبِيرٌ",english:"O humanity! We created you from a male and a female, and made you into peoples and tribes so you may know one another. Surely the most noble of you in Allah's sight is the most righteous. Allah is truly All-Knowing, All-Aware.",ref:"Al-Hujurat 49:13",key:"49:13"},{arabic:"قَالَتِ الْأَعْرَابُ آمَنَّا ۖ قُل لَّمْ تُؤْمِنُوا وَلَٰكِن قُولُوا أَسْلَمْنَا وَلَمَّا يَدْخُلِ الْإِيمَانُ فِي قُلُوبِكُمْ ۖ وَإِن تُطِيعُوا اللَّهَ وَرَسُولَهُ لَا يَلِتْكُم مِّنْ أَعْمَالِكُمْ شَيْئًا ۚ إِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ",english:"The nomadic Arabs say: We believe. Say: You have not believed. Rather say: We have submitted, for faith has not yet entered your hearts. But if you obey Allah and His Messenger He will not diminish anything of your deeds. Surely Allah is All-Forgiving, Most Merciful.",ref:"Al-Hujurat 49:14",key:"49:14"},{arabic:"إِنَّمَا الْمُؤْمِنُونَ الَّذِينَ آمَنُوا بِاللَّهِ وَرَسُولِهِ ثُمَّ لَمْ يَرْتَابُوا وَجَاهَدُوا بِأَمْوَالِهِمْ وَأَنفُسِهِمْ فِي سَبِيلِ اللَّهِ ۚ أُولَٰئِكَ هُمُ الصَّادِقُونَ",english:"The true believers are only those who believe in Allah and His Messenger, then have no doubt, and strive with their wealth and their lives in the cause of Allah. It is they who are the truthful.",ref:"Al-Hujurat 49:15",key:"49:15"}],
+/* 44 Ar-Rahman 55:1-3 */
+[{arabic:"الرَّحْمَٰنُ",english:"The Most Merciful —",ref:"Ar-Rahman 55:1",key:"55:1"},{arabic:"عَلَّمَ الْقُرْآنَ",english:"Taught the Quran,",ref:"Ar-Rahman 55:2",key:"55:2"},{arabic:"خَلَقَ الْإِنسَانَ",english:"Created humanity.",ref:"Ar-Rahman 55:3",key:"55:3"}],
+/* 45 Ar-Rahman 55:26-28 */
+[{arabic:"كُلُّ مَنْ عَلَيْهَا فَانٍ",english:"Everyone upon earth will perish —",ref:"Ar-Rahman 55:26",key:"55:26"},{arabic:"وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ",english:"And only the Face of your Lord, full of majesty and honour, will remain.",ref:"Ar-Rahman 55:27",key:"55:27"},{arabic:"فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ",english:"So which of your Lord's favours would you both deny?",ref:"Ar-Rahman 55:28",key:"55:28"}],
+/* 46 Al-Waqi'ah 56:77-79 */
+[{arabic:"إِنَّهُ لَقُرْآنٌ كَرِيمٌ",english:"This is truly a noble Quran,",ref:"Al-Waqi'ah 56:77",key:"56:77"},{arabic:"فِي كِتَابٍ مَّكْنُونٍ",english:"In a well-preserved Record,",ref:"Al-Waqi'ah 56:78",key:"56:78"},{arabic:"لَّا يَمَسُّهُ إِلَّا الْمُطَهَّرُونَ",english:"None can touch it except the purified.",ref:"Al-Waqi'ah 56:79",key:"56:79"}],
+/* 47 Al-Hadid 57:1-3 */
+[{arabic:"سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ",english:"Whatever is in the heavens and earth glorifies Allah. He is the Almighty, All-Wise.",ref:"Al-Hadid 57:1",key:"57:1"},{arabic:"لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ ۖ يُحْيِي وَيُمِيتُ ۖ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",english:"His is the dominion of the heavens and earth. He gives life and causes death. He is Most Capable of everything.",ref:"Al-Hadid 57:2",key:"57:2"},{arabic:"هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ ۖ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ",english:"He is the First and the Last, the Most High and the Most Near. He has full knowledge of everything.",ref:"Al-Hadid 57:3",key:"57:3"}],
+/* 48 Al-Hashr 59:22-24 */
+[{arabic:"هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمَٰنُ الرَّحِيمُ",english:"He is Allah — there is no god except Him. Knower of the seen and unseen. He is the Most Gracious, Most Merciful.",ref:"Al-Hashr 59:22",key:"59:22"},{arabic:"هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ ۚ سُبْحَانَ اللَّهِ عَمَّا يُشْرِكُونَ",english:"He is Allah — there is no god except Him. The King, the Most Holy, the All-Perfect, the Source of Serenity, the Watcher, the Almighty, the Supreme in Might, the Majestic. Glorified is Allah far above what they associate with Him!",ref:"Al-Hashr 59:23",key:"59:23"},{arabic:"هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْأَسْمَاءُ الْحُسْنَىٰ ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ",english:"He is Allah: the Creator, the Originator, the Fashioner. He has the most beautiful names. Whatever is in the heavens and earth glorifies Him. He is the Almighty, All-Wise.",ref:"Al-Hashr 59:24",key:"59:24"}],
+/* 49 At-Talaq 65:2-4 */
+[{arabic:"وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا",english:"Whoever is mindful of Allah, He will make a way out for them,",ref:"At-Talaq 65:2",key:"65:2"},{arabic:"وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ۚ وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ۚ إِنَّ اللَّهَ بَالِغُ أَمْرِهِ ۚ قَدْ جَعَلَ اللَّهُ لِكُلِّ شَيْءٍ قَدْرًا",english:"And will provide for them from sources they could never imagine. And whoever puts their trust in Allah — He alone is sufficient. Allah will surely accomplish His purpose. Allah has already set a decreed measure for everything.",ref:"At-Talaq 65:3",key:"65:3"},{arabic:"وَمَن يَتَّقِ اللَّهَ يُكَفِّرْ عَنْهُ سَيِّئَاتِهِ وَيُعْظِمْ لَهُ أَجْرًا",english:"And whoever is mindful of Allah — He will absolve them of their sins and greatly reward them.",ref:"At-Talaq 65:5",key:"65:5"}],
+/* 50 Al-Mulk 67:1-3 */
+[{arabic:"تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",english:"Blessed is the One in Whose hands is all authority, and He is Most Capable of everything.",ref:"Al-Mulk 67:1",key:"67:1"},{arabic:"الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ الْعَزِيزُ الْغَفُورُ",english:"Who created death and life in order to test which of you is best in deeds. He is the Almighty, All-Forgiving.",ref:"Al-Mulk 67:2",key:"67:2"},{arabic:"الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ ۖ فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ",english:"Who created seven heavens in layers. You will not see any imperfection in the creation of the Most Merciful. So look again — do you see any flaws?",ref:"Al-Mulk 67:3",key:"67:3"}],
+/* 51 Al-Mulk 67:4-6 */
+[{arabic:"ثُمَّ ارْجِعِ الْبَصَرَ كَرَّتَيْنِ يَنقَلِبْ إِلَيْكَ الْبَصَرُ خَاسِئًا وَهُوَ حَسِيرٌ",english:"Then look again and again — your sight will return to you humbled and exhausted.",ref:"Al-Mulk 67:4",key:"67:4"},{arabic:"وَلَقَدْ زَيَّنَّا السَّمَاءَ الدُّنْيَا بِمَصَابِيحَ وَجَعَلْنَاهَا رُجُومًا لِّلشَّيَاطِينِ ۖ وَأَعْتَدْنَا لَهُمْ عَذَابَ السَّعِيرِ",english:"And We have certainly beautified the nearest heaven with stars and made them as missiles against the devils, for whom We have prepared the punishment of the Blaze.",ref:"Al-Mulk 67:5",key:"67:5"},{arabic:"وَلِلَّذِينَ كَفَرُوا بِرَبِّهِمْ عَذَابُ جَهَنَّمَ ۖ وَبِئْسَ الْمَصِيرُ",english:"For those who disbelieve in their Lord, there is the punishment of Hell — what an evil destination!",ref:"Al-Mulk 67:6",key:"67:6"}],
+/* 52 Al-Jinn 72:1-3 */
+[{arabic:"قُلْ أُوحِيَ إِلَيَّ أَنَّهُ اسْتَمَعَ نَفَرٌ مِّنَ الْجِنِّ فَقَالُوا إِنَّا سَمِعْنَا قُرْآنًا عَجَبًا",english:"Say: It has been revealed to me that a group of jinn listened and said: We have heard a wondrous recitation!",ref:"Al-Jinn 72:1",key:"72:1"},{arabic:"يَهْدِي إِلَى الرُّشْدِ فَآمَنَّا بِهِ ۖ وَلَن نُّشْرِكَ بِرَبِّنَا أَحَدًا",english:"It guides to righteousness, so we believed in it. And we will never associate anyone with our Lord.",ref:"Al-Jinn 72:2",key:"72:2"},{arabic:"وَأَنَّهُ تَعَالَىٰ جَدُّ رَبِّنَا مَا اتَّخَذَ صَاحِبَةً وَلَا وَلَدًا",english:"And exalted is the majesty of our Lord — He has never taken a mate or a son.",ref:"Al-Jinn 72:3",key:"72:3"}],
+/* 53 Al-Muzzammil 73:1-4 */
+[{arabic:"يَا أَيُّهَا الْمُزَّمِّلُ",english:"O you wrapped in garments!",ref:"Al-Muzzammil 73:1",key:"73:1"},{arabic:"قُمِ اللَّيْلَ إِلَّا قَلِيلًا",english:"Stand in prayer at night — except a little —",ref:"Al-Muzzammil 73:2",key:"73:2"},{arabic:"نِّصْفَهُ أَوِ انقُصْ مِنْهُ قَلِيلًا",english:"Half of it, or a little less,",ref:"Al-Muzzammil 73:3",key:"73:3"}],
+/* 54 Al-Insan 76:5-7 */
+[{arabic:"إِنَّ الْأَبْرَارَ يَشْرَبُونَ مِن كَأْسٍ كَانَ مِزَاجُهَا كَافُورًا",english:"Surely the righteous will drink from a cup flavoured with camphor —",ref:"Al-Insan 76:5",key:"76:5"},{arabic:"عَيْنًا يَشْرَبُ بِهَا عِبَادُ اللَّهِ يُفَجِّرُونَهَا تَفْجِيرًا",english:"A spring from which the servants of Allah will drink, flowing wherever they will.",ref:"Al-Insan 76:6",key:"76:6"},{arabic:"يُوفُونَ بِالنَّذْرِ وَيَخَافُونَ يَوْمًا كَانَ شَرُّهُ مُسْتَطِيرًا",english:"They fulfil their vows and fear a Day whose evil is widespread.",ref:"Al-Insan 76:7",key:"76:7"}],
+/* 55 An-Naba 78:1-3 */
+[{arabic:"عَمَّ يَتَسَاءَلُونَ",english:"About what are they asking one another?",ref:"An-Naba 78:1",key:"78:1"},{arabic:"عَنِ النَّبَإِ الْعَظِيمِ",english:"About the momentous announcement —",ref:"An-Naba 78:2",key:"78:2"},{arabic:"الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ",english:"About which they differ.",ref:"An-Naba 78:3",key:"78:3"}],
+/* 56 An-Nazi'at 79:27-29 */
+[{arabic:"أَأَنتُمْ أَشَدُّ خَلْقًا أَمِ السَّمَاءُ ۚ بَنَاهَا",english:"Are you a more difficult creation, or is the sky? He built it,",ref:"An-Nazi'at 79:27",key:"79:27"},{arabic:"رَفَعَ سَمْكَهَا فَسَوَّاهَا",english:"Raised its height and fashioned it,",ref:"An-Nazi'at 79:28",key:"79:28"},{arabic:"وَأَغْطَشَ لَيْلَهَا وَأَخْرَجَ ضُحَاهَا",english:"And darkened its night and brought out its daylight.",ref:"An-Nazi'at 79:29",key:"79:29"}],
+/* 57 At-Takwir 81:1-3 */
+[{arabic:"إِذَا الشَّمْسُ كُوِّرَتْ",english:"When the sun is dimmed,",ref:"At-Takwir 81:1",key:"81:1"},{arabic:"وَإِذَا النُّجُومُ انكَدَرَتْ",english:"And when the stars fall and scatter,",ref:"At-Takwir 81:2",key:"81:2"},{arabic:"وَإِذَا الْجِبَالُ سُيِّرَتْ",english:"And when the mountains are set in motion.",ref:"At-Takwir 81:3",key:"81:3"}],
+/* 58 Al-Infitar 82:6-8 */
+[{arabic:"يَا أَيُّهَا الْإِنسَانُ مَا غَرَّكَ بِرَبِّكَ الْكَرِيمِ",english:"O humanity! What has lured you away from your Lord the Most Generous?",ref:"Al-Infitar 82:6",key:"82:6"},{arabic:"الَّذِي خَلَقَكَ فَسَوَّاكَ فَعَدَلَكَ",english:"Who created you, proportioned you, and assembled you —",ref:"Al-Infitar 82:7",key:"82:7"},{arabic:"فِي أَيِّ صُورَةٍ مَّا شَاءَ رَكَّبَكَ",english:"In whatever form He willed, He put you together.",ref:"Al-Infitar 82:8",key:"82:8"}],
+/* 59 Al-Mutaffifin 83:1-3 */
+[{arabic:"وَيْلٌ لِّلْمُطَفِّفِينَ",english:"Woe to the defrauders —",ref:"Al-Mutaffifin 83:1",key:"83:1"},{arabic:"الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ",english:"Those who take full measure when they receive from others,",ref:"Al-Mutaffifin 83:2",key:"83:2"},{arabic:"وَإِذَا كَالُوهُمْ أَو وَّزَنُوهُمْ يُخْسِرُونَ",english:"But give less when they measure or weigh for others.",ref:"Al-Mutaffifin 83:3",key:"83:3"}],
+/* 60 Al-Buruj 85:14-16 */
+[{arabic:"وَهُوَ الْغَفُورُ الْوَدُودُ",english:"And He is the All-Forgiving, the Most Loving,",ref:"Al-Buruj 85:14",key:"85:14"},{arabic:"ذُو الْعَرْشِ الْمَجِيدُ",english:"The Lord of the Throne, the All-Glorious,",ref:"Al-Buruj 85:15",key:"85:15"},{arabic:"فَعَّالٌ لِّمَا يُرِيدُ",english:"Doer of whatever He wills.",ref:"Al-Buruj 85:16",key:"85:16"}],
+/* 61 Al-A'la 87:14-17 */
+[{arabic:"قَدْ أَفْلَحَ مَن تَزَكَّىٰ",english:"Successful indeed is the one who purifies themselves,",ref:"Al-A'la 87:14",key:"87:14"},{arabic:"وَذَكَرَ اسْمَ رَبِّهِ فَصَلَّىٰ",english:"Remembers the name of their Lord and prays.",ref:"Al-A'la 87:15",key:"87:15"},{arabic:"بَلْ تُؤْثِرُونَ الْحَيَاةَ الدُّنْيَا",english:"But you prefer the life of this world,",ref:"Al-A'la 87:16",key:"87:16"}],
+/* 62 Al-Ghashiyah 88:17-20 */
+[{arabic:"أَفَلَا يَنظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ",english:"Do they not see how camels are created?",ref:"Al-Ghashiyah 88:17",key:"88:17"},{arabic:"وَإِلَى السَّمَاءِ كَيْفَ رُفِعَتْ",english:"And how the sky is raised high?",ref:"Al-Ghashiyah 88:18",key:"88:18"},{arabic:"وَإِلَى الْجِبَالِ كَيْفَ نُصِبَتْ",english:"And how the mountains are firmly set?",ref:"Al-Ghashiyah 88:19",key:"88:19"}],
+/* 63 Al-Fajr 89:27-30 */
+[{arabic:"يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ",english:"O tranquil soul!",ref:"Al-Fajr 89:27",key:"89:27"},{arabic:"ارْجِعِي إِلَىٰ رَبِّكِ رَاضِيَةً مَّرْضِيَّةً",english:"Return to your Lord, well-pleased and pleasing to Him.",ref:"Al-Fajr 89:28",key:"89:28"},{arabic:"فَادْخُلِي فِي عِبَادِي",english:"So enter among My servants,",ref:"Al-Fajr 89:29",key:"89:29"}],
+/* 64 Ash-Shams 91:1-3 */
+[{arabic:"وَالشَّمْسِ وَضُحَاهَا",english:"By the sun and its radiance,",ref:"Ash-Shams 91:1",key:"91:1"},{arabic:"وَالْقَمَرِ إِذَا تَلَاهَا",english:"And the moon as it follows the sun,",ref:"Ash-Shams 91:2",key:"91:2"},{arabic:"وَالنَّهَارِ إِذَا جَلَّاهَا",english:"And the day as it unveils the sun.",ref:"Ash-Shams 91:3",key:"91:3"}],
+/* 65 Al-Layl 92:1-3 */
+[{arabic:"وَاللَّيْلِ إِذَا يَغْشَىٰ",english:"By the night as it envelops,",ref:"Al-Layl 92:1",key:"92:1"},{arabic:"وَالنَّهَارِ إِذَا تَجَلَّىٰ",english:"And the day as it breaks,",ref:"Al-Layl 92:2",key:"92:2"},{arabic:"وَمَا خَلَقَ الذَّكَرَ وَالْأُنثَىٰ",english:"And by He Who created the male and the female —",ref:"Al-Layl 92:3",key:"92:3"}],
+/* 66 Ad-Duha 93:1-3 */
+[{arabic:"وَالضُّحَىٰ",english:"By the morning brightness,",ref:"Ad-Duha 93:1",key:"93:1"},{arabic:"وَاللَّيْلِ إِذَا سَجَىٰ",english:"And by the night when it grows still —",ref:"Ad-Duha 93:2",key:"93:2"},{arabic:"مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ",english:"Your Lord has not abandoned you, nor is He displeased.",ref:"Ad-Duha 93:3",key:"93:3"}],
+/* 67 Ash-Sharh 94:1-3 */
+[{arabic:"أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ",english:"Did We not uplift your heart for you,",ref:"Ash-Sharh 94:1",key:"94:1"},{arabic:"وَوَضَعْنَا عَنكَ وِزْرَكَ",english:"And remove from you the burden",ref:"Ash-Sharh 94:2",key:"94:2"},{arabic:"الَّذِي أَنقَضَ ظَهْرَكَ",english:"That had weighed so heavily on your back?",ref:"Ash-Sharh 94:3",key:"94:3"}],
+/* 68 At-Tin 95:4-6 */
+[{arabic:"لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ",english:"We have certainly created humans in the best form,",ref:"At-Tin 95:4",key:"95:4"},{arabic:"ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ",english:"Then We reduced them to the lowest of the low,",ref:"At-Tin 95:5",key:"95:5"},{arabic:"إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ",english:"Except those who believe and do good — they will have a never-ending reward.",ref:"At-Tin 95:6",key:"95:6"}],
+/* 69 Al-'Alaq 96:1-3 */
+[{arabic:"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",english:"Read in the name of your Lord Who created,",ref:"Al-'Alaq 96:1",key:"96:1"},{arabic:"خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ",english:"Created humanity from a clinging clot.",ref:"Al-'Alaq 96:2",key:"96:2"},{arabic:"اقْرَأْ وَرَبُّكَ الْأَكْرَمُ",english:"Read! And your Lord is the Most Generous —",ref:"Al-'Alaq 96:3",key:"96:3"}],
+/* 70 Al-Qadr 97:1-3 */
+[{arabic:"إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ",english:"Indeed We sent this Quran down on the Night of Glory.",ref:"Al-Qadr 97:1",key:"97:1"},{arabic:"وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ",english:"And what will make you realize what the Night of Glory is?",ref:"Al-Qadr 97:2",key:"97:2"},{arabic:"لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",english:"The Night of Glory is better than a thousand months.",ref:"Al-Qadr 97:3",key:"97:3"}],
+/* 71 Al-Zalzalah 99:6-8 */
+[{arabic:"يَوْمَئِذٍ يَصْدُرُ النَّاسُ أَشْتَاتًا لِّيُرَوْا أَعْمَالَهُمْ",english:"On that Day, people will proceed in separate groups to be shown their deeds.",ref:"Al-Zalzalah 99:6",key:"99:6"},{arabic:"فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",english:"Whoever does an atom's weight of good will see it.",ref:"Al-Zalzalah 99:7",key:"99:7"},{arabic:"وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ",english:"And whoever does an atom's weight of evil will see it.",ref:"Al-Zalzalah 99:8",key:"99:8"}],
+/* 72 At-Takathur 102:1-3 */
+[{arabic:"أَلْهَاكُمُ التَّكَاثُرُ",english:"Competition for more diverts you,",ref:"At-Takathur 102:1",key:"102:1"},{arabic:"حَتَّىٰ زُرْتُمُ الْمَقَابِرَ",english:"Until you visit the graves.",ref:"At-Takathur 102:2",key:"102:2"},{arabic:"كَلَّا سَوْفَ تَعْلَمُونَ",english:"But no! You will soon come to know.",ref:"At-Takathur 102:3",key:"102:3"}],
+/* 73 Al-'Asr 103:1-3 */
+[{arabic:"وَالْعَصْرِ",english:"By the passage of time!",ref:"Al-'Asr 103:1",key:"103:1"},{arabic:"إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",english:"Surely humanity is in loss —",ref:"Al-'Asr 103:2",key:"103:2"},{arabic:"إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ",english:"Except those who have faith, do good deeds, and urge one another to truth and to patience.",ref:"Al-'Asr 103:3",key:"103:3"}],
+/* 74 Al-Humazah 104:1-3 */
+[{arabic:"وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ",english:"Woe to every backbiting slanderer,",ref:"Al-Humazah 104:1",key:"104:1"},{arabic:"الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ",english:"Who amasses wealth and counts it repeatedly,",ref:"Al-Humazah 104:2",key:"104:2"},{arabic:"يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ",english:"Thinking that their wealth will make them immortal!",ref:"Al-Humazah 104:3",key:"104:3"}],
+/* 75 Al-Ma'un 107:1-3 */
+[{arabic:"أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ",english:"Have you seen the one who denies the Judgment?",ref:"Al-Ma'un 107:1",key:"107:1"},{arabic:"فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ",english:"That is the one who repels the orphan,",ref:"Al-Ma'un 107:2",key:"107:2"},{arabic:"وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ",english:"And does not encourage the feeding of the poor.",ref:"Al-Ma'un 107:3",key:"107:3"}],
+/* 76 Al-Kawthar 108:1-3 */
+[{arabic:"إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ",english:"Indeed We have granted you abundant goodness.",ref:"Al-Kawthar 108:1",key:"108:1"},{arabic:"فَصَلِّ لِرَبِّكَ وَانْحَرْ",english:"So pray to your Lord and sacrifice.",ref:"Al-Kawthar 108:2",key:"108:2"},{arabic:"إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ",english:"Surely it is the one who hates you who is without offspring.",ref:"Al-Kawthar 108:3",key:"108:3"}],
+/* 77 Al-Ikhlas 112:1-4 */
+[{arabic:"قُلْ هُوَ اللَّهُ أَحَدٌ",english:"Say: He is Allah — One,",ref:"Al-Ikhlas 112:1",key:"112:1"},{arabic:"اللَّهُ الصَّمَدُ",english:"Allah, the Eternal, Absolute.",ref:"Al-Ikhlas 112:2",key:"112:2"},{arabic:"لَمْ يَلِدْ وَلَمْ يُولَدْ",english:"He neither begets nor is begotten,",ref:"Al-Ikhlas 112:3",key:"112:3"}],
+/* 78 Al-Falaq 113:1-3 */
+[{arabic:"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",english:"Say: I seek refuge in the Lord of the daybreak,",ref:"Al-Falaq 113:1",key:"113:1"},{arabic:"مِن شَرِّ مَا خَلَقَ",english:"From the evil of whatever He has created,",ref:"Al-Falaq 113:2",key:"113:2"},{arabic:"وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",english:"And from the evil of the night when it grows dark,",ref:"Al-Falaq 113:3",key:"113:3"}],
+/* 79 An-Nas 114:1-3 */
+[{arabic:"قُلْ أَعُوذُ بِرَبِّ النَّاسِ",english:"Say: I seek refuge in the Lord of humanity,",ref:"An-Nas 114:1",key:"114:1"},{arabic:"مَلِكِ النَّاسِ",english:"The King of humanity,",ref:"An-Nas 114:2",key:"114:2"},{arabic:"إِلَٰهِ النَّاسِ",english:"The God of humanity.",ref:"An-Nas 114:3",key:"114:3"}],
+/* 80 Al-Baqarah 2:30-32 */
+[{arabic:"وَإِذْ قَالَ رَبُّكَ لِلْمَلَائِكَةِ إِنِّي جَاعِلٌ فِي الْأَرْضِ خَلِيفَةً ۖ قَالُوا أَتَجْعَلُ فِيهَا مَن يُفْسِدُ فِيهَا وَيَسْفِكُ الدِّمَاءَ وَنَحْنُ نُسَبِّحُ بِحَمْدِكَ وَنُقَدِّسُ لَكَ ۖ قَالَ إِنِّي أَعْلَمُ مَا لَا تَعْلَمُونَ",english:"And when your Lord said to the angels: I am going to place a successive authority on earth. They said: Will You place there one who will spread corruption and shed blood, while we glorify Your praises and sanctify You? Allah said: I know what you do not know.",ref:"Al-Baqarah 2:30",key:"2:30"},{arabic:"وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا ثُمَّ عَرَضَهُمْ عَلَى الْمَلَائِكَةِ فَقَالَ أَنبِئُونِي بِأَسْمَاءِ هَٰؤُلَاءِ إِن كُنتُمْ صَادِقِينَ",english:"He taught Adam the names of all things, then presented them to the angels and said: Tell Me the names of these if you are truthful.",ref:"Al-Baqarah 2:31",key:"2:31"},{arabic:"قَالُوا سُبْحَانَكَ لَا عِلْمَ لَنَا إِلَّا مَا عَلَّمْتَنَا ۖ إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ",english:"They said: Glory be to You! We have no knowledge except what You have taught us. Surely it is You Who is the All-Knowing, All-Wise.",ref:"Al-Baqarah 2:32",key:"2:32"}],
+/* 81 Al-Baqarah 2:177 */
+[{arabic:"۞ لَّيْسَ الْبِرَّ أَن تُوَلُّوا وُجُوهَكُمْ قِبَلَ الْمَشْرِقِ وَالْمَغْرِبِ وَلَٰكِنَّ الْبِرَّ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ وَالْمَلَائِكَةِ وَالْكِتَابِ وَالنَّبِيِّينَ وَآتَى الْمَالَ عَلَىٰ حُبِّهِ ذَوِي الْقُرْبَىٰ وَالْيَتَامَىٰ وَالْمَسَاكِينَ وَابْنَ السَّبِيلِ وَالسَّائِلِينَ وَفِي الرِّقَابِ وَأَقَامَ الصَّلَاةَ وَآتَى الزَّكَاةَ وَالْمُوفُونَ بِعَهْدِهِمْ إِذَا عَاهَدُوا ۖ وَالصَّابِرِينَ فِي الْبَأْسَاءِ وَالضَّرَّاءِ وَحِينَ الْبَأْسِ ۗ أُولَٰئِكَ الَّذِينَ صَدَقُوا ۖ وَأُولَٰئِكَ هُمُ الْمُتَّقُونَ",english:"Righteousness is not in turning your faces towards the east or west. Rather the righteous are those who believe in Allah, the Last Day, the angels, the Books, and the prophets; who give wealth in spite of their love for it to relatives, orphans, the poor, travellers, those who ask, and for freeing slaves; who establish prayer and pay zakat; who honour their covenants; and who are patient in poverty, hardship, and in times of suffering. It is they who are the truthful, and it is they who are the righteous.",ref:"Al-Baqarah 2:177",key:"2:177"},{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الْقِصَاصُ فِي الْقَتْلَى ۖ الْحُرُّ بِالْحُرِّ وَالْعَبْدُ بِالْعَبْدِ وَالْأُنثَىٰ بِالْأُنثَىٰ ۚ فَمَنْ عُفِيَ لَهُ مِنْ أَخِيهِ شَيْءٌ فَاتِّبَاعٌ بِالْمَعْرُوفِ وَأَدَاءٌ إِلَيْهِ بِإِحْسَانٍ ۗ ذَٰلِكَ تَخْفِيفٌ مِّن رَّبِّكُمْ وَرَحْمَةٌ ۗ فَمَنِ اعْتَدَىٰ بَعْدَ ذَٰلِكَ فَلَهُ عَذَابٌ أَلِيمٌ",english:"O believers! Legal retaliation is prescribed for you in cases of murder — free for free, slave for slave, and female for female. But if the offender is pardoned by the victim's guardian, then blood-money should be determined reasonably and paid in good faith. This is a concession and mercy from your Lord. But whoever transgresses after that will suffer a painful punishment.",ref:"Al-Baqarah 2:178",key:"2:178"},{arabic:"وَلَكُمْ فِي الْقِصَاصِ حَيَاةٌ يَا أُولِي الْأَلْبَابِ لَعَلَّكُمْ تَتَّقُونَ",english:"There is life for you in legal retribution, O people of understanding, so perhaps you will be mindful of Allah.",ref:"Al-Baqarah 2:179",key:"2:179"}],
+/* 82 An-Nisa 4:1-3 */
+[{arabic:"يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُم مِّن نَّفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً ۚ وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ ۚ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا",english:"O humanity! Be mindful of your Lord Who created you from a single soul, and from it created its mate, and spread countless men and women from both of them. Be mindful of Allah — in Whose name you appeal to one another — and honour family ties. Surely Allah is ever Watchful over you.",ref:"An-Nisa 4:1",key:"4:1"},{arabic:"وَآتُوا الْيَتَامَىٰ أَمْوَالَهُمْ ۖ وَلَا تَتَبَدَّلُوا الْخَبِيثَ بِالطَّيِّبِ ۖ وَلَا تَأْكُلُوا أَمْوَالَهُمْ إِلَىٰ أَمْوَالِكُمْ ۚ إِنَّهُ كَانَ حُوبًا كَبِيرًا",english:"Give orphans their wealth. Do not exchange their good things for your bad ones, and do not consume their wealth along with your own. Surely this is a grave sin.",ref:"An-Nisa 4:2",key:"4:2"},{arabic:"وَإِنْ خِفْتُمْ أَلَّا تُقْسِطُوا فِي الْيَتَامَىٰ فَانكِحُوا مَا طَابَ لَكُم مِّنَ النِّسَاءِ مَثْنَىٰ وَثُلَاثَ وَرُبَاعَ ۖ فَإِنْ خِفْتُمْ أَلَّا تَعْدِلُوا فَوَاحِدَةً أَوْ مَا مَلَكَتْ أَيْمَانُكُمْ ۚ ذَٰلِكَ أَدْنَىٰ أَلَّا تَعُولُوا",english:"If you fear you might fail to give orphan women their rights, then marry other women of your choice — two, three, or four. But if you fear you will not be just, then one, or those your right hands possess. This is more likely to keep you from doing injustice.",ref:"An-Nisa 4:3",key:"4:3"}],
+/* 83 Al-Maidah 5:8-10 */
+[{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا كُونُوا قَوَّامِينَ لِلَّهِ شُهَدَاءَ بِالْقِسْطِ ۖ وَلَا يَجْرِمَنَّكُمْ شَنَآنُ قَوْمٍ عَلَىٰ أَلَّا تَعْدِلُوا ۚ اعْدِلُوا هُوَ أَقْرَبُ لِلتَّقْوَىٰ ۖ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ خَبِيرٌ بِمَا تَعْمَلُونَ",english:"O believers! Stand firmly for Allah as witnesses for justice. Do not let the hatred of a people cause you to be unjust. Be just — that is closer to righteousness. And be mindful of Allah. Surely Allah is All-Aware of what you do.",ref:"Al-Ma'idah 5:8",key:"5:8"},{arabic:"وَعَدَ اللَّهُ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ ۙ لَهُم مَّغْفِرَةٌ وَأَجْرٌ عَظِيمٌ",english:"Allah has promised those who believe and do good — forgiveness and a great reward.",ref:"Al-Ma'idah 5:9",key:"5:9"},{arabic:"وَالَّذِينَ كَفَرُوا وَكَذَّبُوا بِآيَاتِنَا أُولَٰئِكَ أَصْحَابُ الْجَحِيمِ",english:"And those who disbelieve and deny Our signs — they are the residents of the Hellfire.",ref:"Al-Ma'idah 5:10",key:"5:10"}],
+/* 84 Al-Kahf 18:1-3 */
+[{arabic:"الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجًا",english:"All praise is for Allah Who has revealed the Book to His servant and has not made in it any crookedness.",ref:"Al-Kahf 18:1",key:"18:1"},{arabic:"قَيِّمًا لِّيُنذِرَ بَأْسًا شَدِيدًا مِّن لَّدُنْهُ وَيُبَشِّرَ الْمُؤْمِنِينَ الَّذِينَ يَعْمَلُونَ الصَّالِحَاتِ أَنَّ لَهُمْ أَجْرًا حَسَنًا",english:"Upright, to warn of a severe punishment from Him and to give good news to the believers who do good that they will have an excellent reward —",ref:"Al-Kahf 18:2",key:"18:2"},{arabic:"مَّاكِثِينَ فِيهِ أَبَدًا",english:"In which they will remain forever.",ref:"Al-Kahf 18:3",key:"18:3"}],
+/* 85 Az-Zumar 39:1-3 */
+[{arabic:"تَنزِيلُ الْكِتَابِ مِنَ اللَّهِ الْعَزِيزِ الْحَكِيمِ",english:"The revelation of this Book is from Allah — the Almighty, All-Wise.",ref:"Az-Zumar 39:1",key:"39:1"},{arabic:"إِنَّا أَنزَلْنَا إِلَيْكَ الْكِتَابَ بِالْحَقِّ فَاعْبُدِ اللَّهَ مُخْلِصًا لَّهُ الدِّينَ",english:"Indeed We have sent down the Book to you with the truth, so worship Allah, devoting your faith sincerely to Him.",ref:"Az-Zumar 39:2",key:"39:2"},{arabic:"أَلَا لِلَّهِ الدِّينُ الْخَالِصُ ۚ وَالَّذِينَ اتَّخَذُوا مِن دُونِهِ أَوْلِيَاءَ مَا نَعْبُدُهُمْ إِلَّا لِيُقَرِّبُونَا إِلَى اللَّهِ زُلْفَىٰ إِنَّ اللَّهَ يَحْكُمُ بَيْنَهُمْ فِي مَا هُمْ فِيهِ يَخْتَلِفُونَ ۗ إِنَّ اللَّهَ لَا يَهْدِي مَنْ هُوَ كَاذِبٌ كَفَّارٌ",english:"Surely sincere devotion is due to Allah alone. As for those who take other guardians besides Him, saying: We worship them only so they may bring us closer to Allah — Allah will judge between them regarding what they disagree about. Surely Allah does not guide those who are liars and persistent disbelievers.",ref:"Az-Zumar 39:3",key:"39:3"}],
+/* 86 Al-Mu'min 40:7-9 */
+[{arabic:"الَّذِينَ يَحْمِلُونَ الْعَرْشَ وَمَنْ حَوْلَهُ يُسَبِّحُونَ بِحَمْدِ رَبِّهِمْ وَيُؤْمِنُونَ بِهِ وَيَسْتَغْفِرُونَ لِلَّذِينَ آمَنُوا رَبَّنَا وَسِعْتَ كُلَّ شَيْءٍ رَّحْمَةً وَعِلْمًا فَاغْفِرْ لِلَّذِينَ تَابُوا وَاتَّبَعُوا سَبِيلَكَ وَقِهِمْ عَذَابَ الْجَحِيمِ",english:"Those who carry the Throne and those around it glorify their Lord's praises, believe in Him, and seek forgiveness for the believers, saying: Our Lord! You encompass everything in mercy and knowledge. So forgive those who repent and follow Your path, and protect them from the punishment of the Hellfire.",ref:"Ghafir 40:7",key:"40:7"},{arabic:"رَبَّنَا وَأَدْخِلْهُمْ جَنَّاتِ عَدْنٍ الَّتِي وَعَدتَّهُمْ وَمَن صَلَحَ مِنْ آبَائِهِمْ وَأَزْوَاجِهِمْ وَذُرِّيَّاتِهِمْ ۚ إِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ",english:"Our Lord! Admit them into the Gardens of Eternity which You have promised them, along with the righteous among their parents, spouses, and descendants. You are truly the Almighty, All-Wise.",ref:"Ghafir 40:8",key:"40:8"},{arabic:"وَقِهِمُ السَّيِّئَاتِ ۚ وَمَن تَقِ السَّيِّئَاتِ يَوْمَئِذٍ فَقَدْ رَحِمْتَهُ ۚ وَذَٰلِكَ هُوَ الْفَوْزُ الْعَظِيمُ",english:"And protect them from the evil of their deeds. For whoever You protect from the evil of their deeds on that Day — You will have truly shown them mercy. And that is the supreme triumph.",ref:"Ghafir 40:9",key:"40:9"}],
+/* 87 Al-Fath 48:1-3 */
+[{arabic:"إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا",english:"Indeed We have granted you a clear triumph —",ref:"Al-Fath 48:1",key:"48:1"},{arabic:"لِّيَغْفِرَ لَكَ اللَّهُ مَا تَقَدَّمَ مِن ذَنبِكَ وَمَا تَأَخَّرَ وَيُتِمَّ نِعْمَتَهُ عَلَيْكَ وَيَهْدِيَكَ صِرَاطًا مُّسْتَقِيمًا",english:"So that Allah may forgive you for your past and future shortcomings, complete His favour upon you, and guide you to the straight path,",ref:"Al-Fath 48:2",key:"48:2"},{arabic:"وَيَنصُرَكَ اللَّهُ نَصْرًا عَزِيزًا",english:"And so that Allah may give you a mighty victory.",ref:"Al-Fath 48:3",key:"48:3"}],
+/* 88 Al-Hujurat 49:1-3 */
+[{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تُقَدِّمُوا بَيْنَ يَدَيِ اللَّهِ وَرَسُولِهِ ۖ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ سَمِيعٌ عَلِيمٌ",english:"O believers! Do not put yourselves ahead of Allah and His Messenger. And be mindful of Allah — surely Allah is All-Hearing, All-Knowing.",ref:"Al-Hujurat 49:1",key:"49:1"},{arabic:"يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَرْفَعُوا أَصْوَاتَكُمْ فَوْقَ صَوْتِ النَّبِيِّ وَلَا تَجْهَرُوا لَهُ بِالْقَوْلِ كَجَهْرِ بَعْضِكُمْ لِبَعْضٍ أَن تَحْبَطَ أَعْمَالُكُمْ وَأَنتُمْ لَا تَشْعُرُونَ",english:"O believers! Do not raise your voices above the voice of the Prophet, and do not speak loudly to him as you do to one another, or your deeds may become void without you knowing.",ref:"Al-Hujurat 49:2",key:"49:2"},{arabic:"إِنَّ الَّذِينَ يَغُضُّونَ أَصْوَاتَهُمْ عِندَ رَسُولِ اللَّهِ أُولَٰئِكَ الَّذِينَ امْتَحَنَ اللَّهُ قُلُوبَهُمْ لِلتَّقْوَىٰ ۚ لَهُم مَّغْفِرَةٌ وَأَجْرٌ عَظِيمٌ",english:"Indeed those who lower their voices in the presence of Allah's Messenger — they are the ones whose hearts Allah has refined for righteousness. They will have forgiveness and a great reward.",ref:"Al-Hujurat 49:3",key:"49:3"}],
+/* 89 Al-Muzzammil 73:8-10 */
+[{arabic:"وَاذْكُرِ اسْمَ رَبِّكَ وَتَبَتَّلْ إِلَيْهِ تَبْتِيلًا",english:"Remember the name of your Lord and devote yourself to Him wholeheartedly.",ref:"Al-Muzzammil 73:8",key:"73:8"},{arabic:"رَّبُّ الْمَشْرِقِ وَالْمَغْرِبِ لَا إِلَٰهَ إِلَّا هُوَ فَاتَّخِذْهُ وَكِيلًا",english:"He is the Lord of the east and west — there is no god except Him — so take Him alone as your Guardian.",ref:"Al-Muzzammil 73:9",key:"73:9"},{arabic:"وَاصْبِرْ عَلَىٰ مَا يَقُولُونَ وَاهْجُرْهُمْ هَجْرًا جَمِيلًا",english:"And endure patiently what they say, and depart from them gracefully.",ref:"Al-Muzzammil 73:10",key:"73:10"}],
+/* 90 Al-Muddaththir 74:1-3 */
+[{arabic:"يَا أَيُّهَا الْمُدَّثِّرُ",english:"O you wrapped in your cloak!",ref:"Al-Muddaththir 74:1",key:"74:1"},{arabic:"قُمْ فَأَنذِرْ",english:"Arise and warn!",ref:"Al-Muddaththir 74:2",key:"74:2"},{arabic:"وَرَبَّكَ فَكَبِّرْ",english:"And glorify your Lord.",ref:"Al-Muddaththir 74:3",key:"74:3"}]
 ];
 
 let provider, signer, contract, userAddress;
@@ -470,138 +492,89 @@ const $ = id => document.getElementById(id);
 const setStatus = (msg, cls = '') => { $('statusMsg').textContent = msg; $('statusMsg').className = cls; };
 const shortAddr = addr => addr.slice(0,6) + '…' + addr.slice(-4);
 
+// ── Audio state (single play-all for the 3 verses) ─────────────────────────
+let _audio = null, _audioIdx = 0, _currentSet = null, _isPlaying = false;
+
+function stopAudio() {
+  if (_audio) { _audio.pause(); _audio.onended = null; _audio = null; }
+  _isPlaying = false; _audioIdx = 0;
+}
+
+function updateDots(activeIdx) {
+  document.querySelectorAll('.audio-dot').forEach((d, i) => {
+    d.classList.remove('active','done');
+    if (i < activeIdx) d.classList.add('done');
+    else if (i === activeIdx) d.classList.add('active');
+  });
+}
+
+function playIdx(i) {
+  if (!_currentSet || i >= _currentSet.length) {
+    const ic=$('audioIcon'), st=$('audioStatus');
+    if(ic) ic.textContent='▶'; if(st) st.textContent='Recitation complete ✓';
+    updateDots(_currentSet ? _currentSet.length : 0);
+    _isPlaying=false; _audioIdx=0; return;
+  }
+  _audioIdx=i; updateDots(i);
+  const v=_currentSet[i], [s,a]=v.key.split(':');
+  const url=`https://everyayah.com/data/Alafasy_128kbps/${s.padStart(3,'0')}${a.padStart(3,'0')}.mp3`;
+  const st=$('audioStatus');
+  if(st) st.textContent=`Playing ${i+1}/3 — ${v.ref}`;
+  _audio=new Audio(url);
+  _audio.play().catch(()=>{
+    if(st) st.textContent='Could not load audio. Try again.';
+    const ic=$('audioIcon'); if(ic) ic.textContent='▶'; _isPlaying=false;
+  });
+  _audio.onended=()=>playIdx(i+1);
+}
+
+function toggleRecitation() {
+  const ic=$('audioIcon'), st=$('audioStatus');
+  if (_isPlaying) {
+    if(_audio) _audio.pause();
+    _isPlaying=false; if(ic) ic.textContent='▶'; if(st) st.textContent='Paused'; return;
+  }
+  if (_audio && _audio.paused && _audioIdx>0) {
+    _audio.play(); _isPlaying=true;
+    if(ic) ic.textContent='⏸';
+    if(st && _currentSet) st.textContent=`Playing ${_audioIdx+1}/3 — ${_currentSet[_audioIdx].ref}`;
+    return;
+  }
+  _isPlaying=true; if(ic) ic.textContent='⏸'; if(st) st.textContent='Loading…';
+  playIdx(0);
+}
+
 function renderVerses(setIndex) {
+  stopAudio();
   const set = VERSE_SETS[setIndex % VERSE_SETS.length];
+  _currentSet = set;
   const frame = $('verseFrame');
   frame.innerHTML = '';
 
-  // Audio player bar at top
-  const audioBar = document.createElement('div');
-  audioBar.className = 'audio-bar';
-  audioBar.id = 'audioBar';
-  audioBar.innerHTML = `
-    <button class="btn-audio" id="btnAudio" onclick="playRecitation()">
-      <span id="audioIcon">▶</span> &nbsp; استمع — Listen
+  // ── single audio bar ────────────────────────────────────────────────────
+  const bar = document.createElement('div');
+  bar.className = 'audio-bar';
+  bar.innerHTML = `
+    <button class="btn-audio" id="btnAudio" onclick="toggleRecitation()">
+      <span id="audioIcon">▶</span>&nbsp; استمع — Listen to all 3
     </button>
-    <div class="audio-status" id="audioStatus">Al-Afasy Recitation</div>
-  `;
-  frame.appendChild(audioBar);
+    <div class="audio-status" id="audioStatus">Al-Afasy Recitation · 3 consecutive verses</div>
+    <div class="audio-dots">
+      <div class="audio-dot"></div><div class="audio-dot"></div><div class="audio-dot"></div>
+    </div>`;
+  frame.appendChild(bar);
 
   set.forEach((v, i) => {
     const item = document.createElement('div');
     item.className = 'verse-item';
     item.innerHTML = `
-      <div class="verse-number">— آية ${i + 1} من ٣ —</div>
+      <div class="verse-number">— آية ${i+1} من ٣ —</div>
       <div class="verse-arabic">${v.arabic}</div>
       <div class="verse-english">${v.english}</div>
-      <div class="verse-ref">${v.ref}</div>
-    `;
+      <div class="verse-ref">${v.ref}</div>`;
     frame.appendChild(item);
   });
 
-  // Store current set for audio
-  window._currentVerseSet = set;
-  window._audioIndex = 0;
-  if (window._audio) { window._audio.pause(); window._audio = null; }
-  $('audioIcon') && ($('audioIcon').textContent = '▶');
-}
-
-function playRecitation() {
-  const set = window._currentVerseSet;
-  if (!set) return;
-
-  if (window._audio && !window._audio.paused) {
-    window._audio.pause();
-    $('audioIcon').textContent = '▶';
-    $('audioStatus').textContent = 'Paused';
-    return;
-  }
-
-  // Use everyayah.com with Mishary Al-Afasy (reciter 05)
-  // URL format: https://everyayah.com/data/Alafasy_128kbps/SURAH_AYAH.mp3
-  // key format: "surah:ayah"
-  const verse = set[window._audioIndex || 0];
-  const [surah, ayah] = verse.key.split(':');
-  const surahPadded = surah.padStart(3, '0');
-  const ayahPadded = ayah.padStart(3, '0');
-  const url = `https://everyayah.com/data/Alafasy_128kbps/${surahPadded}${ayahPadded}.mp3`;
-
-  $('audioStatus').textContent = 'Loading…';
-  $('audioIcon').textContent = '⏸';
-
-  window._audio = new Audio(url);
-  window._audio.play().then(() => {
-    $('audioStatus').textContent = `Playing: ${verse.ref}`;
-  }).catch(() => {
-    $('audioStatus').textContent = 'Could not load audio. Try again.';
-    $('audioIcon').textContent = '▶';
-  });
-
-  window._audio.onended = () => {
-    window._audioIndex = (window._audioIndex || 0) + 1;
-    if (window._audioIndex < set.length) {
-      playRecitation();
-    } else {
-      window._audioIndex = 0;
-      $('audioIcon').textContent = '▶';
-      $('audioStatus').textContent = 'Recitation complete ✓';
-    }
-  };
-}
-
-async function refreshStats() {
-  try {
-    const [total, mine, fee] = await contract.getStats(userAddress);
-    $('globalReads').textContent = total.toString();
-    $('myReads').textContent = mine.toString();
-    const feeEth = ethers.formatEther(fee);
-    $('readFee').textContent = feeEth === '0.0' ? 'Free' : feeEth + ' ETH';
-    $('statsRow').style.display = 'flex';
-  } catch(_) {}
-}
-
-// Show random 3 verses immediately on page load
-window.addEventListener('DOMContentLoaded', () => renderVerses(currentSetIndex));
-
-async function connectWallet() {
-  if (!window.ethereum) { setStatus('No wallet detected. Install MetaMask or Coinbase Wallet.', 'error'); return; }
-  try {
-    setStatus('Connecting…');
-    provider = new ethers.BrowserProvider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-
-    const network = await provider.getNetwork();
-    if (Number(network.chainId) !== BASE_CHAIN_ID) {
-      setStatus('Switching to Base network…');
-      try {
-        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: BASE_CHAIN_HEX }] });
-      } catch (e) {
-        if (e.code === 4902) {
-          await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{
-            chainId: BASE_CHAIN_HEX, chainName: 'Base',
-            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-            rpcUrls: ['https://mainnet.base.org'], blockExplorerUrls: ['https://basescan.org']
-          }]});
-        } else throw e;
-      }
-      provider = new ethers.BrowserProvider(window.ethereum);
-    }
-
-    signer = await provider.getSigner();
-    userAddress = await signer.getAddress();
-
-    $('walletDot').classList.add('connected');
-    $('walletAddr').textContent = shortAddr(userAddress);
-    $('networkBadge').style.display = 'inline-flex';
-    $('btnConnect').style.display = 'none';
-    $('btnRead').disabled = false;
-
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    await refreshStats();
-    setStatus('Wallet connected ✓', 'success');
-  } catch (err) {
-    setStatus(err.message || 'Connection failed', 'error');
-  }
 }
 
 async function requestVerse() {
